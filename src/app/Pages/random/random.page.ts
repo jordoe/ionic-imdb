@@ -17,6 +17,9 @@ export class RandomPage implements OnInit {
     this.filmsService.getDefaultFilm().subscribe((response: any) => {
       this.filmImage = 'https://image.tmdb.org/t/p/original'+response.poster_path;
       this.film = response;
+      //console.log(response);
+    })
+    this.filmsService.searchTest().subscribe((response: any) => {
       console.log(response);
     })
   }

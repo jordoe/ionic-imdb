@@ -2,7 +2,7 @@
   <div class="container">
     <div class="top">
       <ion-text color="primary" *ngIf="film !== undefined">
-        <h1 class="title">{{film.original_title}} ({{film.release_date.split('-')[0]}})</h1>
+        <h2 class="title">{{film.original_title}} ({{film.release_date.split('-')[0]}})</h2>
       </ion-text>
       <div class="poster-container">
         <ion-img class="poster" [src]="(filmImage)"></ion-img>

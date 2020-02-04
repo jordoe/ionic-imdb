@@ -18,8 +18,13 @@ export class FilmsService {
     return this.https.get(defaultFilmUrl + this.key);
   }
   public getRandomFilm(): Observable<any> {
-    let randomFilm = Math.floor(Math.random() * 600) + 1;
+    let randomFilm = Math.floor(Math.random() * 440000) + 1;
     const randomFilmUrl = 'https://api.themoviedb.org/3/movie/'+ randomFilm;
     return this.https.get(randomFilmUrl + this.key);
   }
+  public searchTest(): Observable<any> {{
+    const query = '&query=a';
+    const url = 'https://api.themoviedb.org/3/search/movie' + this.key + query + '&language=en-US&page=1&include_adult=false&year=2018'
+    return this.https.get(url);
+  }}
 }

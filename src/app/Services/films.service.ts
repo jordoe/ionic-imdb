@@ -12,13 +12,14 @@ export class FilmsService {
 
   constructor(private https: HttpClient) { }
 
-  public getTestRequest(): Observable<any> {
+  public getDefaultFilm(): Observable<any> {
+    const defaultFilm = 364;
+    const defaultFilmUrl = 'https://api.themoviedb.org/3/movie/'+ defaultFilm;
+    return this.https.get(defaultFilmUrl + this.key);
+  }
+  public getRandomFilm(): Observable<any> {
     let randomFilm = Math.floor(Math.random() * 600) + 1;
-    //randomFilm = 550;
-    randomFilm = 364;
     const randomFilmUrl = 'https://api.themoviedb.org/3/movie/'+ randomFilm;
-    const filmsList = 'https://api.themoviedb.org/3/movie/top_rated';
-    const url = randomFilmUrl + this.key;
-    return this.https.get(url);
+    return this.https.get(randomFilmUrl + this.key);
   }
 }

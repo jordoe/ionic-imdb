@@ -5,6 +5,18 @@
     flex-direction: column;
 }
 
+.top {
+
+}
+
+.bottom {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 4rem;
+}
+
 .title {
     text-align: center;
 }
@@ -17,4 +29,8 @@
 
 .poster {
     height: 100%;
+}
+
+.btn {
+    margin: 2rem 0;
 }

@@ -1,0 +1,11 @@
+<ion-content>
+  <div class="container">
+    <ion-text color="primary" *ngIf="film !== undefined">
+      <h1 class="title">{{film.original_title}} ({{film.release_date.split('-')[0]}})</h1>
+    </ion-text>
+    <div class="poster-container">
+      <ion-img class="poster" [src]="(filmImage)"></ion-img>
+    </div>
+    <ion-button expand="block">Block Button</ion-button>
+  </div>
+</ion-content>

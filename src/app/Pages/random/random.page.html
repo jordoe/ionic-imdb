@@ -2,11 +2,43 @@
   <div class="container">
     <div class="top">
       <ion-text color="primary" *ngIf="film !== undefined">
-        <h2 class="title">{{film.original_title}} ({{film.release_date.split('-')[0]}})</h2>
+        <h2 class="title">{{truncStr(film.original_title, 22)}} ({{film.release_date.split('-')[0]}})</h2>
       </ion-text>
       <div class="poster-container">
         <ion-img class="poster" [src]="(filmImage)"></ion-img>
       </div>
+      <!-- LO DEL FILTRO: (pasarlo a otro componente modal) -->
+      <ion-grid>
+        <ion-row>
+          <ion-col>            
+            <ion-item (click)="pressFilter(0)"><ion-checkbox></ion-checkbox><h4> Release Year </h4></ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class="filter-details" *ngIf="filterActiveArr[0]">
+          <ion-col>
+            <ion-item class="ion-no-padding" lines="none">
+              <div class="filter-option-container">
+                <ion-text class="filter-option-text">From </ion-text><ion-button (click)="showPicker('years')">{{ releaseYear[0] }}</ion-button>
+                <ion-text class="filter-option-text"> To </ion-text><ion-button (click)="showPicker('years')">{{ releaseYear[1] }}</ion-button>
+              </div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>            
+            <ion-item (click)="pressFilter(1)"><ion-checkbox></ion-checkbox><h4> Vote Average </h4></ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class="filter-details" *ngIf="filterActiveArr[1]">
+          <ion-col>
+            <ion-item lines="none">
+              <ion-button (click)="showPicker('votes')">Set Range</ion-button>
+              <ion-text class="filter-option-text">From {{ voteAvg[0] }} to {{ voteAvg[1] }}</ion-text>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <!-- FINAL DE LO DEL FILTRO -->
     </div>
     <div class="bottom">
       <ion-button class="btn" expand="block" (click)="pressRandom()">Get Random!</ion-button>

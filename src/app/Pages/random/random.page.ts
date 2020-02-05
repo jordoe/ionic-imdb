@@ -14,6 +14,8 @@ export class RandomPage implements OnInit {
   public film: any;
 
   //Filters variables:
+  public filtersShown: boolean = false;
+
   private filterDefaults: string[][];
   public filters: string[][] = [];
 
@@ -41,7 +43,11 @@ export class RandomPage implements OnInit {
     })
   }
 
-  public pressFilter(index: number) {
+  public pressFilters(): void {
+    this.filtersShown = !this.filtersShown;
+  }
+
+  public pressFilter(index: number): void {
     this.filterActiveArr[index] = !this.filterActiveArr[index];
   }
 

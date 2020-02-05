@@ -8,38 +8,43 @@
         <ion-img class="poster" [src]="(filmImage)"></ion-img>
       </div>
       <!-- LO DEL FILTRO: (pasarlo a otro componente modal) -->
-      <ion-grid>
-        <ion-row>
-          <ion-col>            
-            <ion-item (click)="pressFilter(0)"><ion-checkbox></ion-checkbox><h4> Release Year </h4></ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="filterActiveArr[0]">
-          <ion-col>
-            <ion-item class="ion-no-padding" lines="none">
-              <div class="filter-option-container">
-                <ion-text class="filter-option-text">From</ion-text><ion-button (click)="showPicker('years')">{{ filters[0][0] }}</ion-button>
-                <ion-text class="filter-option-text">To</ion-text><ion-button (click)="showPicker('years')">{{ filters[0][1] }}</ion-button>
-              </div>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>            
-            <ion-item (click)="pressFilter(1)"><ion-checkbox></ion-checkbox><h4> Vote Average </h4></ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="filterActiveArr[1]">
-          <ion-col>
-            <ion-item class="ion-no-padding" lines="none">
-              <div class="filter-option-container">
-                <ion-text class="filter-option-text">From</ion-text><ion-button (click)="showPicker('votes')">{{ filters[1][0] }}</ion-button>
-                <ion-text class="filter-option-text">To</ion-text><ion-button (click)="showPicker('votes')">{{ filters[1][1] }}</ion-button>
-              </div>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <ion-item class="ion-no-padding" (click)="pressFilters()">
+        <ion-text><h1> Filters </h1></ion-text>
+      </ion-item>
+      <div class="filters" *ngIf="filtersShown">
+        <ion-grid>
+          <ion-row>
+            <ion-col>            
+              <ion-item (click)="pressFilter(0)"><ion-checkbox [checked]="filterActiveArr[0]"></ion-checkbox><h4> Release Year </h4></ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="filterActiveArr[0]">
+            <ion-col>
+              <ion-item class="ion-no-padding" lines="none">
+                <div class="filter-option-container">
+                  <ion-text class="filter-option-text">From</ion-text><ion-button (click)="showPicker('years')">{{ filters[0][0] }}</ion-button>
+                  <ion-text class="filter-option-text">To</ion-text><ion-button (click)="showPicker('years')">{{ filters[0][1] }}</ion-button>
+                </div>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>            
+              <ion-item (click)="pressFilter(1)"><ion-checkbox [checked]="filterActiveArr[1]"></ion-checkbox><h4> Vote Average </h4></ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="filterActiveArr[1]">
+            <ion-col>
+              <ion-item class="ion-no-padding" lines="none">
+                <div class="filter-option-container">
+                  <ion-text class="filter-option-text">From</ion-text><ion-button (click)="showPicker('votes')">{{ filters[1][0] }}</ion-button>
+                  <ion-text class="filter-option-text">To</ion-text><ion-button (click)="showPicker('votes')">{{ filters[1][1] }}</ion-button>
+                </div>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
       <!-- FINAL DE LO DEL FILTRO -->
     </div>
     <div class="bottom">

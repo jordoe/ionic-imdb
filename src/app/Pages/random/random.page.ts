@@ -11,6 +11,7 @@ import { PickerOptions } from '@ionic/core';
 export class RandomPage implements OnInit {
 
   public filmImage: string;
+  public filmGenres: string[];
   public film: any;
 
   //-------------- Filters variables:
@@ -21,7 +22,9 @@ export class RandomPage implements OnInit {
 
   public filterActiveArr = [false, false, false];
 
-  public genreFilter;
+  public genres;
+  public selectedGenres = [];
+  public deselectAll = false;
   //-------------- Filters variables end
 
   constructor(private filmsService: FilmsService, private pickerCtrl: PickerController) { }
@@ -32,21 +35,28 @@ export class RandomPage implements OnInit {
 
     this.filmsService.getDefaultFilm().subscribe((response: any) => {
       this.filmImage = 'https://image.tmdb.org/t/p/original'+response.poster_path;
+      this.filmGenres = response.genres.map(x => x.name);
       this.film = response;
     })
 
     this.filmsService.getGenresList().subscribe((response: any) => {
-      this.genreFilter = response.genres;
+      this.genres = response.genres;
+      this.genres.forEach(genre => {
+        this.selectedGenres.push(false);
+      });
     });
   }
 
   public pressRandom(): void {
     let activeFilters = this.getFiltersIfActive();
+    let activeGenres = this.getGenresNumbersIfActive();
+    //console.log(activeGenres);
     //console.log(activeFilters);
-    this.filmsService.getRandomFilm(activeFilters[0][0],activeFilters[0][1],activeFilters[1][0],activeFilters[1][1],activeFilters[2][0],activeFilters[2][1],null,null).subscribe((response: any) => {
-      this.filmImage = 'https://image.tmdb.org/t/p/original'+response.poster_path;
+    this.filmsService.getRandomFilm(activeFilters[0][0],activeFilters[0][1],activeFilters[1][0],activeFilters[1][1],activeFilters[2][0],activeFilters[2][1],activeGenres,null).subscribe((response: any) => {
+      this.filmImage = 'https://image.tmdb.org/t/p/original' + response.poster_path;
+      this.filmGenres = response.genres.map(x => x.name);
       this.film = response;
-      //console.log(response);
+      console.log(response);
     })
   }
 
@@ -56,6 +66,28 @@ export class RandomPage implements OnInit {
 
   public pressFilter(index: number): void {
     this.filterActiveArr[index] = !this.filterActiveArr[index];
+  }
+
+  public setAllGenres(b: boolean) {
+    this.selectedGenres.forEach((selected, i) => {
+      this.selectedGenres[i] = b;
+    });
+    this.checkIfDeselectAll();
+  }
+
+  private checkIfDeselectAll() {
+    let selectedG = [];
+    this.selectedGenres.forEach(selected => {
+      if(selected) {
+        selectedG.push(true);
+      }
+    });
+    this.deselectAll = (selectedG.length > 3);
+  }
+
+  public pressGenre(index: number): void {
+    this.selectedGenres[index] = !this.selectedGenres[index];
+    this.checkIfDeselectAll();
   }
 
   private getFiltersIfActive(): string[][] {
@@ -79,6 +111,16 @@ export class RandomPage implements OnInit {
       }
     });
     return activeFilters;
+  }
+
+  private getGenresNumbersIfActive() {
+    let activeGenres = [];
+    this.selectedGenres.forEach((selected, i) => {
+      if(selected) {
+        activeGenres.push(this.genres[i].id);
+      }
+    });
+    return activeGenres;
   }
 
   private setDefaultFilterContent(){

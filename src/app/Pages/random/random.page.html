@@ -1,11 +1,18 @@
 <ion-content>
   <div class="container">
-    <div class="top">
-      <ion-text color="primary" *ngIf="film !== undefined">
+    <div class="top" *ngIf="film !== undefined">
+      <ion-text color="primary">
         <h2 class="title">{{truncStr(film.original_title, 22)}} ({{film.release_date.split('-')[0]}})</h2>
       </ion-text>
       <div class="poster-container">
         <ion-img class="poster" [src]="(filmImage)"></ion-img>
+      </div>
+      <div class="details-container">
+        <ion-text color="medium"><p>{{ filmGenres.join(", ") }}</p></ion-text>
+        <ion-text color="medium" *ngIf="film.tagline !== ''"><h5 class="ion-no-margin">{{ film.tagline }}</h5></ion-text>
+        <div class="description-container">
+          <div><p class="description">{{ film.overview }}</p></div>
+        </div>
       </div>
     </div>
     <div class="bottom">
@@ -86,15 +93,17 @@
                   <ion-col>
                     <div class="filter-header">
                       <div class="filter-name"><h4> Genres </h4></div>
+                      <div class="filter-selectAll" *ngIf="!deselectAll" (click)="setAllGenres(true)"><h5>Select All</h5></div>
+                      <div class="filter-selectAll" *ngIf="deselectAll" (click)="setAllGenres(false)"><h5>Deselect All</h5></div>
                     </div>
                   </ion-col>
                 </ion-row>
-                <ion-row *ngIf="genreFilter !== undefined">
+                <ion-row *ngIf="genres !== undefined">
                   <ion-col>
                     <div class="filter-option-container--alwaysVisible">
                       <div class="genres-container">
-                        <div class="genre" *ngFor="let genre of genreFilter; index as i">
-                          <ion-checkbox class="filter-checkbox" [checked]="filterActiveArr[0]"></ion-checkbox><h5> {{ genre.name }} </h5>
+                        <div class="genre" *ngFor="let genre of genres; index as i" (click)="pressGenre(i)">
+                          <ion-checkbox class="filter-checkbox" [checked]="selectedGenres[i]"></ion-checkbox><h5> {{ genre.name }} </h5>
                         </div>
                       </div>
                     </div>

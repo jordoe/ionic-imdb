@@ -26,7 +26,7 @@ export class FilmsService {
     const certifGteStr = certifGte === null ? '': '&certification.gte=' + certifGte;
     const certifLteStr = certifLte === null ? '': '&certification.lte=' + certifLte;
     const includeAdult = certifLte === 'NC-17' ? true : false;
-    let genres = '?with_genres=';
+    let genres = '&with_genres=';
     if (genresArr === null) {
       genres = '';
     } else {
@@ -40,6 +40,7 @@ export class FilmsService {
     const orgCountryStr = orgCountry === null ? '' : '&with_original_language=' + orgCountry;
     const url = 'https://api.themoviedb.org/3/discover/movie'
                 + this.key
+                + genres
                 + yearGteStr
                 + yearLteStr
                 + voteCount
@@ -49,7 +50,6 @@ export class FilmsService {
                 + certifGteStr
                 + certifLteStr
                 + '&include_adult=' + includeAdult
-                + genres
                 + orgCountryStr
     //console.log(url);
     const obs = new Observable(observer => {

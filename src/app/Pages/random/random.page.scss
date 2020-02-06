@@ -1,5 +1,9 @@
 @import '../../../theme/variables.scss';
 
+h5 {
+    font-size: 1.6rem;
+}
+
 ion-content {
     --overflow: hidden;
 }
@@ -13,6 +17,7 @@ ion-content {
 }
 
 .top {
+    height: 86%;
     padding: 0 2rem;
 }
 
@@ -20,16 +25,15 @@ ion-content {
     z-index: 2;
     position: sticky;
     bottom: 0;
-    flex-grow: 1;
+    height: 14%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     padding: 0 4rem;
     filter: drop-shadow(6px 6px 12px rgba(87, 87, 87, 0.4));
 }
 
 .buttons {
-    height: 34%;
 }
 
 .title {
@@ -45,8 +49,23 @@ ion-content {
 }
 
 .poster {
-    height: 100%;
-    filter: drop-shadow(6px 6px 12px rgba(8, 8, 8, 0.9));
+    height: 100%;    
+    filter: drop-shadow(6px 6px 8px rgba(0, 0, 0, 1));
+}
+
+.details-container {
+    display: flex;
+    flex-direction: column;
+    height: 20rem;
+}
+
+.description-container {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.description {
+    font-size: 1.2rem;
 }
 
 .filters-backdrop {
@@ -104,6 +123,10 @@ ion-content {
     margin: 0 1rem;
 }
 
+.filter-header {
+    display: flex;
+}
+
 .filter-name {
     display: flex;
     align-items: center;
@@ -111,6 +134,15 @@ ion-content {
     h4 {        
         margin-top: 0;
         margin-bottom: 0;
+    }
+}
+
+.filter-selectAll {
+    flex-grow: 1;
+    text-align: end;
+    h5 {
+        margin-bottom: 0;
+        margin-right: 1rem;
     }
 }
 

@@ -59,6 +59,10 @@ ion-content {
     height: 20rem;
 }
 
+.details-tagline {
+    color: #6889d4;
+}
+
 .description-container {
     flex-grow: 1;
     overflow-y: auto;
@@ -208,6 +212,9 @@ ion-content {
 
 .btn {
     margin: 2rem 0;
+    &__filter {
+        background-color: #6889d4;
+    }
 }
 
 @keyframes openModalAnim {

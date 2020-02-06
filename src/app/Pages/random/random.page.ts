@@ -30,7 +30,7 @@ export class RandomPage implements OnInit {
   constructor(private filmsService: FilmsService, private pickerCtrl: PickerController) { }
 
   ngOnInit() {
-    this.filterDefaults = [['1980', '2020'], ['4', '8'], ['G', 'PG-13']];
+    this.filterDefaults = [['1980', '2020'], ['4', '10'], ['G', 'PG-13']];
     this.filterDefaults.forEach((element, i) => {this.filters.push(this.filterDefaults[i])});
 
     this.filmsService.getDefaultFilm().subscribe((response: any) => {
@@ -235,7 +235,7 @@ export class RandomPage implements OnInit {
   private getVotesArr(): number[] {
     let arr = [];
     let from = 0;
-    let to = 8;
+    let to = 10;
     for (let i=from; i<=to; i++) {
       const obj = {
         text: i.toString(),

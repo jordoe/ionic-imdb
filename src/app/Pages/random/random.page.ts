@@ -13,7 +13,7 @@ export class RandomPage implements OnInit {
   public filmImage: string;
   public film: any;
 
-  //Filters variables:
+  //-------------- Filters variables:
   public filtersModalOpened: boolean = false;
 
   private filterDefaults: string[][];
@@ -21,22 +21,29 @@ export class RandomPage implements OnInit {
 
   public filterActiveArr = [false, false, false];
 
+  public genreFilter;
+  //-------------- Filters variables end
+
   constructor(private filmsService: FilmsService, private pickerCtrl: PickerController) { }
 
   ngOnInit() {
-    this.filterDefaults = [['1960', '2020'], ['0', '10'], ['G', 'R']];
+    this.filterDefaults = [['1980', '2020'], ['4', '8'], ['G', 'PG-13']];
     this.filterDefaults.forEach((element, i) => {this.filters.push(this.filterDefaults[i])});
 
     this.filmsService.getDefaultFilm().subscribe((response: any) => {
       this.filmImage = 'https://image.tmdb.org/t/p/original'+response.poster_path;
       this.film = response;
     })
+
+    this.filmsService.getGenresList().subscribe((response: any) => {
+      this.genreFilter = response.genres;
+    });
   }
 
   public pressRandom(): void {
     let activeFilters = this.getFiltersIfActive();
-    console.log(activeFilters);
-    this.filmsService.getRandomFilm(activeFilters[0][0],activeFilters[0][1],activeFilters[1][0],activeFilters[1][1],activeFilters[2][0],activeFilters[2][1],null).subscribe((response: any) => {
+    //console.log(activeFilters);
+    this.filmsService.getRandomFilm(activeFilters[0][0],activeFilters[0][1],activeFilters[1][0],activeFilters[1][1],activeFilters[2][0],activeFilters[2][1],null,null).subscribe((response: any) => {
       this.filmImage = 'https://image.tmdb.org/t/p/original'+response.poster_path;
       this.film = response;
       //console.log(response);
@@ -186,7 +193,7 @@ export class RandomPage implements OnInit {
   private getVotesArr(): number[] {
     let arr = [];
     let from = 0;
-    let to = 10;
+    let to = 8;
     for (let i=from; i<=to; i++) {
       const obj = {
         text: i.toString(),

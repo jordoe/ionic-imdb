@@ -7,47 +7,6 @@
       <div class="poster-container">
         <ion-img class="poster" [src]="(filmImage)"></ion-img>
       </div>
-      <!-- LO DEL FILTRO: (pasarlo a otro componente modal) -->
-
-      <!-- <ion-item class="ion-no-padding" (click)="pressFilters()">
-        <ion-text><h1> Filters </h1></ion-text>
-      </ion-item>
-      <div class="filters" *ngIf="filtersShown">
-        <ion-grid>
-          <ion-row>
-            <ion-col>            
-              <ion-item (click)="pressFilter(0)"><ion-checkbox [checked]="filterActiveArr[0]"></ion-checkbox><h4> Release Year </h4></ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngIf="filterActiveArr[0]">
-            <ion-col>
-              <ion-item class="ion-no-padding" lines="none">
-                <div class="filter-option-container">
-                  <ion-text class="filter-option-text">From</ion-text><ion-button (click)="showPicker('years')">{{ filters[0][0] }}</ion-button>
-                  <ion-text class="filter-option-text">To</ion-text><ion-button (click)="showPicker('years')">{{ filters[0][1] }}</ion-button>
-                </div>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>            
-              <ion-item (click)="pressFilter(1)"><ion-checkbox [checked]="filterActiveArr[1]"></ion-checkbox><h4> Vote Average </h4></ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngIf="filterActiveArr[1]">
-            <ion-col>
-              <ion-item class="ion-no-padding" lines="none">
-                <div class="filter-option-container">
-                  <ion-text class="filter-option-text">From</ion-text><ion-button (click)="showPicker('votes')">{{ filters[1][0] }}</ion-button>
-                  <ion-text class="filter-option-text">To</ion-text><ion-button (click)="showPicker('votes')">{{ filters[1][1] }}</ion-button>
-                </div>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div> -->
-
-      <!-- FINAL DE LO DEL FILTRO -->
     </div>
     <div class="bottom">
       <div class="buttons">
@@ -71,77 +30,79 @@
         <div class="filters-header ion-no-padding" (click)="pressFilters()">
           <ion-text color="primary"><h1> Filters </h1></ion-text>
         </div>
-        <div class="filters">
-          <ion-grid>
-            <div class="filter">
-              <ion-row>
-                <ion-col>            
-                  <div class="filter-name" (click)="pressFilter(0)"><ion-checkbox class="filter-checkbox" [checked]="filterActiveArr[0]"></ion-checkbox><h4> Release Year </h4></div>
-                </ion-col>
-              </ion-row>
-              <ion-row *ngIf="filterActiveArr[0]">
-                <ion-col>
-                  <div class="filter-option-container">
-                    <div class="filter-option-decorator"><div class="filter-option-decorator__pointer"></div></div>
-                    <ion-text class="filter-option-text">From</ion-text><ion-button color="dark" class="filter-option-button" (click)="showPicker('years')">{{ filters[0][0] }}</ion-button>
-                    <ion-text class="filter-option-text">To</ion-text><ion-button color="dark" class="filter-option-button" (click)="showPicker('years')">{{ filters[0][1] }}</ion-button>
-                  </div>
-                </ion-col>
-              </ion-row>
-            </div>
-            <div class="filter">
-              <ion-row>
-                <ion-col>            
-                  <div class="filter-name" (click)="pressFilter(1)"><ion-checkbox class="filter-checkbox" [checked]="filterActiveArr[1]"></ion-checkbox><h4> Vote Average </h4></div>
-                </ion-col>
-              </ion-row>
-              <ion-row *ngIf="filterActiveArr[1]">
-                <ion-col>
-                  <div class="filter-option-container">
-                    <div class="filter-option-decorator"><div class="filter-option-decorator__pointer"></div></div>
-                    <ion-text class="filter-option-text">From</ion-text><ion-button color="dark" class="filter-option-button" (click)="showPicker('votes')">{{ filters[1][0] }}</ion-button>
-                    <ion-text class="filter-option-text">To</ion-text><ion-button color="dark" class="filter-option-button" (click)="showPicker('votes')">{{ filters[1][1] }}</ion-button>
-                  </div>
-                </ion-col>
-              </ion-row>
-            </div>
-            <div class="filter">
-              <ion-row>
-                <ion-col>            
-                  <div class="filter-name" (click)="pressFilter(2)"><ion-checkbox class="filter-checkbox" [checked]="filterActiveArr[2]"></ion-checkbox><h4> Age Certification </h4></div>
-                </ion-col>
-              </ion-row>
-              <ion-row *ngIf="filterActiveArr[2]">
-                <ion-col>
-                  <div class="filter-option-container">
-                    <div class="filter-option-decorator"><div class="filter-option-decorator__pointer"></div></div>
-                    <ion-text class="filter-option-text">From</ion-text><ion-button color="dark" class="filter-option-button" (click)="showPicker('califications')">{{ filters[2][0] }}</ion-button>
-                    <ion-text class="filter-option-text">To</ion-text><ion-button color="dark" class="filter-option-button" (click)="showPicker('califications')">{{ filters[2][1] }}</ion-button>
-                  </div>
-                </ion-col>
-              </ion-row>
-            </div>
-            <div class="filter">
-              <ion-row>
-                <ion-col>
-                  <div class="filter-header">
-                    <div class="filter-name"><h4> Genres </h4></div>
-                  </div>
-                </ion-col>
-              </ion-row>
-              <ion-row *ngIf="genreFilter !== undefined">
-                <ion-col>
-                  <div class="filter-option-container--alwaysVisible">
-                    <div class="genres-container">
-                      <div class="genre" *ngFor="let genre of genreFilter; index as i">
-                        <ion-checkbox class="filter-checkbox" [checked]="filterActiveArr[0]"></ion-checkbox><h5> {{ genre.name }} </h5>
+        <div class="filters-scroll">
+          <div class="filters">
+            <ion-grid>
+              <div class="filter">
+                <ion-row>
+                  <ion-col>            
+                    <div class="filter-name" (click)="pressFilter(0)"><ion-checkbox class="filter-checkbox" [checked]="filterActiveArr[0]"></ion-checkbox><h4> Release Year </h4></div>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="filterActiveArr[0]">
+                  <ion-col>
+                    <div class="filter-option-container">
+                      <div class="filter-option-decorator"><div class="filter-option-decorator__pointer"></div></div>
+                      <ion-text class="filter-option-text">From</ion-text><ion-button color="dark" class="filter-option-button" (click)="showPicker('years')">{{ filters[0][0] }}</ion-button>
+                      <ion-text class="filter-option-text">To</ion-text><ion-button color="dark" class="filter-option-button" (click)="showPicker('years')">{{ filters[0][1] }}</ion-button>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </div>
+              <div class="filter">
+                <ion-row>
+                  <ion-col>            
+                    <div class="filter-name" (click)="pressFilter(1)"><ion-checkbox class="filter-checkbox" [checked]="filterActiveArr[1]"></ion-checkbox><h4> Vote Average </h4></div>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="filterActiveArr[1]">
+                  <ion-col>
+                    <div class="filter-option-container">
+                      <div class="filter-option-decorator"><div class="filter-option-decorator__pointer"></div></div>
+                      <ion-text class="filter-option-text">From</ion-text><ion-button color="dark" class="filter-option-button" (click)="showPicker('votes')">{{ filters[1][0] }}</ion-button>
+                      <ion-text class="filter-option-text">To</ion-text><ion-button color="dark" class="filter-option-button" (click)="showPicker('votes')">{{ filters[1][1] }}</ion-button>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </div>
+              <div class="filter">
+                <ion-row>
+                  <ion-col>            
+                    <div class="filter-name" (click)="pressFilter(2)"><ion-checkbox class="filter-checkbox" [checked]="filterActiveArr[2]"></ion-checkbox><h4> Age Certification </h4></div>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="filterActiveArr[2]">
+                  <ion-col>
+                    <div class="filter-option-container">
+                      <div class="filter-option-decorator"><div class="filter-option-decorator__pointer"></div></div>
+                      <ion-text class="filter-option-text">From</ion-text><ion-button color="dark" class="filter-option-button" (click)="showPicker('califications')">{{ filters[2][0] }}</ion-button>
+                      <ion-text class="filter-option-text">To</ion-text><ion-button color="dark" class="filter-option-button" (click)="showPicker('califications')">{{ filters[2][1] }}</ion-button>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </div>
+              <div class="filter">
+                <ion-row>
+                  <ion-col>
+                    <div class="filter-header">
+                      <div class="filter-name"><h4> Genres </h4></div>
+                    </div>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="genreFilter !== undefined">
+                  <ion-col>
+                    <div class="filter-option-container--alwaysVisible">
+                      <div class="genres-container">
+                        <div class="genre" *ngFor="let genre of genreFilter; index as i">
+                          <ion-checkbox class="filter-checkbox" [checked]="filterActiveArr[0]"></ion-checkbox><h5> {{ genre.name }} </h5>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </ion-col>
-              </ion-row>
-            </div>
-          </ion-grid>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </ion-grid>
+          </div>
         </div>
       </div>
     </div>

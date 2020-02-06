@@ -1,5 +1,9 @@
 @import '../../../theme/variables.scss';
 
+ion-content {
+    --overflow: hidden;
+}
+
 .container {
     position: relative;
     height: 100%;
@@ -66,9 +70,16 @@
 }
 
 .filters-container {
+    display: flex;
+    flex-direction: column;
     padding: 0 2rem;
     height: 100%;
     width: 100%;
+}
+
+.filters-scroll {
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
 .filters-back {
@@ -127,7 +138,7 @@
     position: absolute;
     height: 120%;
     width: 0.2rem;
-    left: 2.25rem;
+    left: 2.2rem;
     top: -3.4rem;
     &__pointer {
         background-color: #f5cd5e;

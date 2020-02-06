@@ -14,37 +14,37 @@ export class RandomPage implements OnInit {
   public film: any;
 
   //Filters variables:
-  public filtersShown: boolean = false;
+  public filtersModalOpened: boolean = false;
 
   private filterDefaults: string[][];
   public filters: string[][] = [];
 
-  public filterActiveArr = [false, false];
+  public filterActiveArr = [false, false, false];
 
   constructor(private filmsService: FilmsService, private pickerCtrl: PickerController) { }
 
   ngOnInit() {
-    this.filterDefaults = [['1900', '2021'], ['0', '10']];
+    this.filterDefaults = [['1960', '2020'], ['0', '10'], ['G', 'R']];
     this.filterDefaults.forEach((element, i) => {this.filters.push(this.filterDefaults[i])});
 
     this.filmsService.getDefaultFilm().subscribe((response: any) => {
       this.filmImage = 'https://image.tmdb.org/t/p/original'+response.poster_path;
       this.film = response;
-      //console.log(response);
     })
   }
 
   public pressRandom(): void {
     let activeFilters = this.getFiltersIfActive();
-    this.filmsService.getRandomFilm(activeFilters[0][0],activeFilters[0][1],activeFilters[1][0],activeFilters[1][1],null,'PG-13').subscribe((response: any) => {
+    console.log(activeFilters);
+    this.filmsService.getRandomFilm(activeFilters[0][0],activeFilters[0][1],activeFilters[1][0],activeFilters[1][1],activeFilters[2][0],activeFilters[2][1],null).subscribe((response: any) => {
       this.filmImage = 'https://image.tmdb.org/t/p/original'+response.poster_path;
       this.film = response;
       //console.log(response);
     })
   }
 
-  public pressFilters(): void {
-    this.filtersShown = !this.filtersShown;
+  public pressFiltersButton(): void {
+    this.filtersModalOpened = !this.filtersModalOpened;
   }
 
   public pressFilter(index: number): void {
@@ -85,15 +85,23 @@ export class RandomPage implements OnInit {
   async showPicker(option: string) {
     let optionsGteArr;
     let optionsLteArr;
+    let selectedFilter;
     switch (option) {
       case 'years':
         optionsGteArr = this.getYearsArr('gte')
         optionsLteArr = this.getYearsArr('lte')
+        selectedFilter = 0;
         break;
       case 'votes':
-      optionsGteArr = this.getVotesArr()
-      optionsLteArr = optionsGteArr;
-        break; 
+        optionsGteArr = this.getVotesArr()
+        optionsLteArr = optionsGteArr;
+        selectedFilter = 1;
+        break;
+      case 'califications':
+        optionsGteArr = this.getCalificationArr()
+        optionsLteArr = optionsGteArr;
+        selectedFilter = 2;
+        break;
       default:
         break;
     }
@@ -116,7 +124,10 @@ export class RandomPage implements OnInit {
     };
     const arr: string[] = []
     let picker = await this.pickerCtrl.create(opts);
-    picker.columns[1].selectedIndex = optionsLteArr.length;
+    console.log(this.filters[selectedFilter][1].toString());
+    console.log(optionsLteArr);
+    picker.columns[0].selectedIndex = optionsGteArr.findIndex(x => x.text == this.filters[selectedFilter][0].toString());
+    picker.columns[1].selectedIndex = optionsLteArr.findIndex(x => x.text == this.filters[selectedFilter][1].toString());
     picker.present();
     picker.onDidDismiss().then(async data => {
       let from = await picker.getColumn('from');
@@ -136,7 +147,11 @@ export class RandomPage implements OnInit {
       case 'votes':
         this.filters[1][0] = arr[0];
         this.filters[1][1] = arr[1];
-        break; 
+        break;
+      case 'califications':
+        this.filters[2][0] = arr[0];
+        this.filters[2][1] = arr[1];
+        break;
       default:
         break;
     }
@@ -179,6 +194,12 @@ export class RandomPage implements OnInit {
       }
       arr.push(obj);
     }
+    return arr;
+  }
+
+  private getCalificationArr(): string[] {
+    let arr: any[] = ['G', 'PG', 'PG-13', 'R', 'NC-17'];
+    arr = arr.map(x => {return {text: x, value: x}})
     return arr;
   }
 

@@ -17,27 +17,29 @@ export class FilmsService {
     const defaultFilmUrl = 'https://api.themoviedb.org/3/movie/'+ defaultFilm;
     return this.https.get(defaultFilmUrl + this.key);
   }
-  public getRandomFilm(yearGte: string|number = null, yearLte: string|number = null, voteAvgGte: string|number = null, voteAvgLte: string|number = null, orgCountry: string = null, certification: string = null): Observable<any> {
+  public getRandomFilm(yearGte: string|number = null, yearLte: string|number = null, voteAvgGte: string|number = null, voteAvgLte: string|number = null, certifGte: string = null, certifLte: string = null, orgCountry: string = null): Observable<any> {
     const yearGteStr = yearGte === null ? '' : '&primary_release_date.gte=' + yearGte + '-01-01';
     const yearLteStr = yearLte === null ? '' : '&primary_release_date.lte=' + yearLte + '-12-01';
     const voteAvgGteStr = voteAvgGte === null ? '' : '&vote_average.gte=' + voteAvgGte;
     const voteAvgLteStr = voteAvgLte === null ? '' : '&vote_average.lte=' + voteAvgLte;
-    const voteCount =  (voteAvgGte !== null && parseInt(voteAvgGte.toString()) < 6) ? '' : '&vote_count.gte=100';
+    const voteCount =  (voteAvgGte !== null && parseInt(voteAvgGte.toString()) >= 6) ? '&vote_count.gte=50' : '';
     const orgCountryStr = orgCountry === null ? '' : '&with_original_language=' + orgCountry;
-    const certificationStr = certification === null ? '': '&certification_country=US&certification=' + certification;
-    const includeAdult = certification === 'NC-17' ? true : false;
-
+    const certifGteStr = certifGte === null ? '': '&certification.gte=' + certifGte;
+    const certifLteStr = certifLte === null ? '': '&certification.lte=' + certifLte;
+    const includeAdult = certifLte === 'NC-17' ? true : false;
     const url = 'https://api.themoviedb.org/3/discover/movie'
                 + this.key
-                + '&include_adult=' + includeAdult
                 + yearGteStr
                 + yearLteStr
                 + voteCount
                 + voteAvgGteStr
                 + voteAvgLteStr
+                + '&certification_country=US'
+                + certifGteStr
+                + certifLteStr
+                + '&include_adult=' + includeAdult
                 + orgCountryStr
-                + certificationStr
-    
+    console.log(url);
     const obs = new Observable(observer => {
       this.https.get(url).subscribe((response: any) => {
         const page = Math.floor(Math.random() * response.total_pages) + 1;

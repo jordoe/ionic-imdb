@@ -19,18 +19,22 @@ export class RandomPage implements OnInit {
 
   private filterDefaults: string[][];
   public filters: string[][] = [];
+  public forToFiltersNames: string[][] = [];
 
-  public filterActiveArr = [false, false, false];
+  public filterActiveArr = [false, false, false, false];
 
   public genres;
   public selectedGenres = [];
   public deselectAll = false;
   //-------------- Filters variables end
 
+  public errorModalOpened: boolean = false;
+
   constructor(private filmsService: FilmsService, private pickerCtrl: PickerController) { }
 
   ngOnInit() {
-    this.filterDefaults = [['1980', '2020'], ['4', '10'], ['G', 'PG-13']];
+    this.filterDefaults = [['2000', '2020'], ['4', '10'], ['G', 'PG-13'], ['English']];
+    this.forToFiltersNames = [['Release Year', 'years'], ['Vote Average', 'votes'],['Age Certification', 'califications']];
     this.filterDefaults.forEach((element, i) => {this.filters.push(this.filterDefaults[i])});
 
     this.filmsService.getDefaultFilm().subscribe((response: any) => {
@@ -50,14 +54,23 @@ export class RandomPage implements OnInit {
   public pressRandom(): void {
     let activeFilters = this.getFiltersIfActive();
     let activeGenres = this.getGenresNumbersIfActive();
-    //console.log(activeGenres);
+    activeFilters[3] = this.parseLang(activeFilters[3]);
     //console.log(activeFilters);
-    this.filmsService.getRandomFilm(activeFilters[0][0],activeFilters[0][1],activeFilters[1][0],activeFilters[1][1],activeFilters[2][0],activeFilters[2][1],activeGenres,null).subscribe((response: any) => {
-      this.filmImage = 'https://image.tmdb.org/t/p/original' + response.poster_path;
-      this.filmGenres = response.genres.map(x => x.name);
-      this.film = response;
-      console.log(response);
+    //console.log(activeGenres);
+    this.filmsService.getRandomFilm(activeFilters[0][0],activeFilters[0][1],activeFilters[1][0],activeFilters[1][1],activeFilters[2][0],activeFilters[2][1],activeGenres,activeFilters[3][0]).subscribe((response: any) => {
+      if (response !== null) {
+        this.filmImage = 'https://image.tmdb.org/t/p/original' + response.poster_path;
+        this.filmGenres = response.genres.map(x => x.name);
+        this.film = response;
+      } else {
+        this.showErrorModal();
+      }
+      //console.log(response);
     })
+  }
+
+  public showErrorModal(): void {
+    this.errorModalOpened = !this.errorModalOpened;
   }
 
   public pressFiltersButton(): void {
@@ -132,6 +145,41 @@ export class RandomPage implements OnInit {
   }
 
   async showPicker(option: string) {
+    let optionsArr;
+    let selectedFilter;
+    switch (option) {
+      case 'language':
+        optionsArr = this.getLanguagesArr();
+        selectedFilter = 0;
+        break;
+      default:
+        break;
+    }
+    let opts: PickerOptions = {
+      buttons: [
+        {
+          text: 'Done'
+        }
+      ],
+      columns: [
+        {
+          name: 'language',
+          options: optionsArr
+        }
+      ]
+    };
+    const arr: string[] = []
+    let picker = await this.pickerCtrl.create(opts);
+    picker.columns[0].selectedIndex = optionsArr.findIndex(x => x.text == this.filters[selectedFilter][0].toString());
+    picker.present();
+    picker.onDidDismiss().then(async data => {
+      let value = await picker.getColumn('language');
+      arr.push(value.options[value.selectedIndex].text);
+      this.setPickerValues(option, arr);
+    })
+  }
+
+  async showDoublePicker(option: string) {
     let optionsGteArr;
     let optionsLteArr;
     let selectedFilter;
@@ -173,8 +221,6 @@ export class RandomPage implements OnInit {
     };
     const arr: string[] = []
     let picker = await this.pickerCtrl.create(opts);
-    console.log(this.filters[selectedFilter][1].toString());
-    console.log(optionsLteArr);
     picker.columns[0].selectedIndex = optionsGteArr.findIndex(x => x.text == this.filters[selectedFilter][0].toString());
     picker.columns[1].selectedIndex = optionsLteArr.findIndex(x => x.text == this.filters[selectedFilter][1].toString());
     picker.present();
@@ -200,6 +246,9 @@ export class RandomPage implements OnInit {
       case 'califications':
         this.filters[2][0] = arr[0];
         this.filters[2][1] = arr[1];
+        break;
+      case 'language':
+        this.filters[3][0] = arr[0];
         break;
       default:
         break;
@@ -248,8 +297,41 @@ export class RandomPage implements OnInit {
 
   private getCalificationArr(): string[] {
     let arr: any[] = ['G', 'PG', 'PG-13', 'R', 'NC-17'];
-    arr = arr.map(x => {return {text: x, value: x}})
+    arr = arr.map(x => {return {text: x, value: x}});
     return arr;
+  }
+
+  private getLanguagesArr(): string[] {
+    let arr: any[] = ['English', 'Spanish', 'French', 'Japanese', 'Turkish', 'Hindi'];
+    arr = arr.map(x => {return {text: x, value: x}});
+    return arr;
+  }
+
+  private parseLang(arr: string[]): string[] {
+    let result = [];
+    switch (arr[0]) {
+      case 'English':
+        result.push('en');
+        break;
+      case 'Spanish':
+        result.push('es');
+        break;
+      case 'French':
+        result.push('fr');
+        break;
+      case 'Japanese':
+        result.push('ja');
+        break;
+      case 'Turkish':
+        result.push('tr');
+        break;
+      case 'Hindi':
+        result.push('hi');
+        break;
+      default:
+        break;
+    }
+    return result;
   }
 
   public truncStr(str: string, at: number): string {

@@ -72,19 +72,45 @@ ion-content {
     font-size: 1.2rem;
 }
 
+.error-modal-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    animation-name: openModalAnim;
+    animation-duration: 0.3s;
+}
+
+.error-modal {
+    width: 80%;
+    background-color: #2a2c2f;
+    border-radius: 1rem;
+    box-shadow: 6px 6px 8px #000000e0;
+    padding: 1rem;
+    padding-top: 0;
+}
+
+.error-title {
+    color: #6889d4;
+}
+
 .filters-backdrop {
     position: absolute;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 2;
     background-color: rgba(8, 8, 8, 0);
+    animation: forwards;
     animation-name: filtersBackdropAnim;
-    animation-duration: 0.5s;
+    animation-duration: 0.3s;
 }
 
 .filters-modal {
     position: absolute;
-    z-index: 2;
+    z-index: 3;
     width: 100%;
     height: 100%;
     background-color: #17181a;

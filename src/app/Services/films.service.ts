@@ -17,7 +17,7 @@ export class FilmsService {
     const defaultFilmUrl = 'https://api.themoviedb.org/3/movie/'+ defaultFilm;
     return this.https.get(defaultFilmUrl + this.key);
   }
-  public getRandomFilm(yearGte: string|number = null, yearLte: string|number = null, voteAvgGte: string|number = null, voteAvgLte: string|number = null, certifGte: string = null, certifLte: string = null, genresArr: number[] = null, orgCountry: string = null): Observable<any> {
+  public getRandomFilm(yearGte: string|number = null, yearLte: string|number = null, voteAvgGte: string|number = null, voteAvgLte: string|number = null, certifGte: string = null, certifLte: string = null, genresArr: number[] = null, orgLanguage: string = null): Observable<any> {
     const yearGteStr = yearGte === null ? '' : '&primary_release_date.gte=' + yearGte + '-01-01';
     const yearLteStr = yearLte === null ? '' : '&primary_release_date.lte=' + yearLte + '-12-01';
     const voteAvgGteStr = voteAvgGte === null ? '' : '&vote_average.gte=' + voteAvgGte;
@@ -37,7 +37,7 @@ export class FilmsService {
         }
       });
     }
-    const orgCountryStr = orgCountry === null ? '' : '&with_original_language=' + orgCountry;
+    const orgLanguageStr = orgLanguage === null ? '' : '&with_original_language=' + orgLanguage;
     const url = 'https://api.themoviedb.org/3/discover/movie'
                 + this.key
                 + genres
@@ -50,7 +50,7 @@ export class FilmsService {
                 + certifGteStr
                 + certifLteStr
                 + '&include_adult=' + includeAdult
-                + orgCountryStr
+                + orgLanguageStr
     //console.log(url);
     const obs = new Observable(observer => {
       this.https.get(url).subscribe((response: any) => {
@@ -58,11 +58,15 @@ export class FilmsService {
         const randomPage = '&page=' + page;
         const urlWithPage = url + randomPage;
         this.https.get(urlWithPage).subscribe((finalResponse: any) => {
-          const randomFilm = (Math.floor(Math.random() * finalResponse.results.length) + 1) - 1;
-          const filmId = finalResponse.results[randomFilm].id;
-          this.https.get('https://api.themoviedb.org/3/movie/'+ filmId + this.key).subscribe((film: any) => {
-            observer.next(film);
-          })
+          if(finalResponse.results.length === 0) {
+            observer.next(null);
+          } else {
+            const randomFilm = (Math.floor(Math.random() * finalResponse.results.length) + 1) - 1;
+            const filmId = finalResponse.results[randomFilm].id;
+            this.https.get('https://api.themoviedb.org/3/movie/'+ filmId + this.key).subscribe((film: any) => {
+              observer.next(film);
+            })
+          }
         });
       });
     })

@@ -14,13 +14,19 @@ export class FilmsService {
 
   public getDefaultFilm(): Observable<any> {
     const defaultFilm = 27205;
+    // const defaultFilm = 49049;
     const defaultFilmUrl = 'https://api.themoviedb.org/3/movie/'+ defaultFilm;
     return this.https.get(defaultFilmUrl + this.key);
   }
 
   public getFilmDetails(id: string): Observable<any> {
-    const defaultFilmUrl = 'https://api.themoviedb.org/3/movie/'+ id;
-    return this.https.get(defaultFilmUrl + this.key);
+    const film = 'https://api.themoviedb.org/3/movie/'+ id;
+    return this.https.get(film + this.key);
+  }
+
+  public getFilmCredits(id: string): Observable<any> {
+    const film = 'https://api.themoviedb.org/3/movie/'+ id + '/credits';
+    return this.https.get(film + this.key);
   }
 
   public getRandomFilm(yearGte: string|number = null, yearLte: string|number = null, voteAvgGte: string|number = null, voteAvgLte: string|number = null, certifGte: string = null, certifLte: string = null, genresArr: number[] = null, orgLanguage: string = null): Observable<any> {

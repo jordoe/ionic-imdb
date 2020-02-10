@@ -12,6 +12,8 @@ export class DetailsFilmPage implements OnInit {
   private filmId: string;
   public film: any;
   public backdropUrl: string;
+  public filmGenres: any[];
+  public cast: any[];
 
   constructor(private route: ActivatedRoute, private filmsService: FilmsService) { }
 
@@ -20,10 +22,19 @@ export class DetailsFilmPage implements OnInit {
       this.filmId = params.get('id');
       this.filmsService.getFilmDetails(this.filmId).subscribe((response: any) => {
         this.film = response;
+        this.filmGenres = response.genres.map(x => x.name);
         this.backdropUrl = 'https://image.tmdb.org/t/p/original' + this.film.backdrop_path;
-        //console.log(this.film);
+        console.log(this.film);
+      });
+      this.filmsService.getFilmCredits(this.filmId).subscribe((response: any) => {
+        this.cast = response.cast;
+        console.log(this.cast);
       });
     });
+  }
+
+  public getActorImageUrl(id: number): string {
+    return 'https://image.tmdb.org/t/p/original' + this.cast[id].profile_path;
   }
 
 }

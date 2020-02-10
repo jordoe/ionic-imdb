@@ -49,17 +49,21 @@ ion-content {
     filter: drop-shadow(6px 6px 8px rgba(0, 0, 0, 1));
 }
 
+.small-detail {
+    margin: 0.2rem 0;
+}
+
 .details-button-container {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 .details-container {
     display: flex;
     flex-direction: column;
-    height: 20rem;
+    height: 12rem;
+    margin-top: 1rem;
 }
 
 .details-tagline {
@@ -69,10 +73,12 @@ ion-content {
 .description-container {
     flex-grow: 1;
     overflow-y: auto;
+    margin: 1rem 0;
 }
 
 .description {
     font-size: 1.2rem;
+    margin: 0;
 }
 
 .error-modal-container {
@@ -253,7 +259,7 @@ ion-content {
         background-color: #6889d4;
     }
     &__details {
-        margin: 1rem 0;
+        margin: 0.5rem 0;
         width: 36%;
     }
 }

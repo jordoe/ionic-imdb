@@ -1,15 +1,93 @@
+.all-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(37,38,41,1) 75%);
+}
 
 .backdrop-container {
     display: flex;
-    position: relative;
+    position: sticky;
+    top: 0;
     width: 100%;
+    z-index: 0;
 }
 
 .backdrop-gradient {
     position: absolute;
-    background: rgb(23,24,26);
-    background: linear-gradient(0deg, #17181a 6%, rgba(23, 24, 26, 0) 100%);
-    bottom: -1px;
+    top: 0;
+    left: 0;
+    transform: translateY(-98%);
+    background: rgb(32, 32, 35);
+    background: linear-gradient(0deg, #252629 20%, rgba(32, 32, 35, 0) 100%);
     height: 20%;
     width: 100%;
+}
+
+.details-container {
+    position: relative;
+    padding: 0 2rem;
+    flex-grow: 1;
+    z-index: 1;
+    background: linear-gradient(0deg, black 0%, #252629 75%);
+}
+
+.back {
+    height: 100%;
+    &__icon {
+        height: 100%;
+        width: 2rem;
+    }
+}
+
+.title {
+    margin: 0;
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    margin: 0.2rem 0;
+    &--big {
+        font-size: 1.6rem;
+    }
+}
+
+.text-line {
+    display: flex;
+    align-items: center;
+}
+
+.cast-container {
+    width: 100%;
+    height: 16rem;
+    padding: 1rem 0;
+}
+
+.cast {
+    height: 100%;
+    width: 100%;
+    display: -webkit-box;
+    overflow-x: auto;
+}
+
+.actor {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 1.5rem;
+    &__image {
+        height: 70%;
+        margin: 0.2rem;
+        img {
+            width: auto;
+        }
+    }
 }

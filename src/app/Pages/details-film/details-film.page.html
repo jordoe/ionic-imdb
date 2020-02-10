@@ -1,6 +1,45 @@
-<ion-content *ngIf="film !== undefined">
-  <div class="backdrop-container">
-    <ion-img [src]="(backdropUrl)"></ion-img>
-    <div class="backdrop-gradient"></div>
+<ion-content *ngIf="film !== undefined && cast !== undefined">
+  <div class="all-container">
+    <div class="backdrop-container">
+      <ion-img [src]="(backdropUrl)"></ion-img>
+    </div>
+    <div class="details-container">
+      <div class="backdrop-gradient"></div>
+      <div class="details-header">
+        <div class="title-container">
+          <ion-text color="primary">
+            <h2 class="title">{{ film.original_title }}</h2>
+          </ion-text>
+        </div>      
+        <ion-text class="text-line" color="secondary">
+          <h4 class="ion-no-margin subtitle--big">{{ film.runtime }} min.</h4>
+        </ion-text>
+        <ion-text color="medium">        
+          <h5 class="ion-no-margin subtitle">{{ filmGenres.join(", ") }}</h5>
+        </ion-text>
+        <ion-text color="medium">        
+          <h5 class="ion-no-margin subtitle">{{ film.release_date.split('-')[0] }}</h5>
+        </ion-text>
+      </div>
+      <div class="description-container">
+        <div><p class="description">{{ film.overview }}</p></div>
+      </div>      
+      <ion-text class="text-line" color="primary">
+        <h4 class="ion-no-margin subtitle--big">Cast</h4>
+      </ion-text>
+      <div class="cast-container">
+        <div class="cast">
+          <div class="actor" *ngFor="let actor of cast; index as i">
+            <img class="actor__image" [src]="getActorImageUrl(i)"/>
+            <ion-text class="text-line" color="secondary">
+              <h4 class="ion-no-margin subtitle--big">{{ actor.character }}</h4>
+            </ion-text>
+            <ion-text color="medium">        
+              <h5 class="ion-no-margin subtitle">{{ actor.name }}</h5>
+            </ion-text>
+          </div>
+        </div>
+      </div>  
+    </div>
   </div>
 </ion-content>

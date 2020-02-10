@@ -5,12 +5,12 @@
     </div>
     <div class="details-container">
       <div class="backdrop-gradient"></div>
+      <div class="title-container">
+        <ion-text color="primary">
+          <h2 class="title">{{ film.original_title }}</h2>
+        </ion-text>
+      </div>      
       <div class="details-header">
-        <div class="title-container">
-          <ion-text color="primary">
-            <h2 class="title">{{ film.original_title }}</h2>
-          </ion-text>
-        </div>      
         <ion-text class="text-line" color="secondary">
           <h4 class="ion-no-margin subtitle--big">{{ film.runtime }} min.</h4>
         </ion-text>
@@ -23,23 +23,39 @@
       </div>
       <div class="description-container">
         <div><p class="description">{{ film.overview }}</p></div>
-      </div>      
-      <ion-text class="text-line" color="primary">
-        <h4 class="ion-no-margin subtitle--big">Cast</h4>
+      </div>
+      <div class="directors-container">
+        <ion-text class="text-line" color="secondary">
+          <h4 class="subtitle--big">Director/s:</h4>
+        </ion-text>
+        <ion-text class="text-line" color="dark">
+          <h4 class="subtitle subtitle-margin">{{ director.name }}</h4>
+        </ion-text>
+      </div>
+      <ion-text class="text-line" color="secondary">
+        <h4 class="ion-no-margin subtitle--big">Cast:</h4>
       </ion-text>
       <div class="cast-container">
         <div class="cast">
           <div class="actor" *ngFor="let actor of cast; index as i">
             <img class="actor__image" [src]="getActorImageUrl(i)"/>
-            <ion-text class="text-line" color="secondary">
-              <h4 class="ion-no-margin subtitle--big">{{ actor.character }}</h4>
+            <ion-text class="text-line" color="dark">
+              <h5 class="ion-no-margin subtitle">{{ actor.character }}</h5>
             </ion-text>
             <ion-text color="medium">        
               <h5 class="ion-no-margin subtitle">{{ actor.name }}</h5>
             </ion-text>
           </div>
         </div>
-      </div>  
+      </div>
+      <ion-text class="text-line" color="secondary">
+        <h4 class="ion-no-margin subtitle--big">Similar Films:</h4>
+      </ion-text>
+      <div class="similar-films-container">
+        <div class="similar-film" *ngFor="let film of similarFilms; index as i">
+          <img class="similar-film__image" [src]="getSimilarFilmPoster(i)"/>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>

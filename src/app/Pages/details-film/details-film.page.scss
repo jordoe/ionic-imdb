@@ -49,6 +49,9 @@
     align-items: center;
     padding-top: 0.5rem;
     padding-bottom: 1rem;
+    position: sticky;
+    top: 0;
+    background-color: #252629;
 }
 
 .subtitle {
@@ -56,12 +59,24 @@
     margin: 0.2rem 0;
     &--big {
         font-size: 1.6rem;
+        margin: 0;
     }
+}
+
+.subtitle-margin {
+    margin: 0;
+    margin-left: 0.6rem;
 }
 
 .text-line {
     display: flex;
     align-items: center;
+}
+
+.directors-container {
+    display: flex;
+    align-items: flex-end;
+    margin: 0.5rem 0;
 }
 
 .cast-container {
@@ -82,12 +97,24 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 1.5rem;
+    margin: 0 1rem;
     &__image {
         height: 70%;
         margin: 0.2rem;
         img {
             width: auto;
         }
+    }
+}
+
+.similar-films-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.similar-film {
+    &__image{
+        width: 50%;
     }
 }

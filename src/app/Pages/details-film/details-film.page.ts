@@ -14,6 +14,9 @@ export class DetailsFilmPage implements OnInit {
   public backdropUrl: string;
   public filmGenres: any[];
   public cast: any[];
+  public director: any;
+
+  public similarFilms: any[];
 
   constructor(private route: ActivatedRoute, private filmsService: FilmsService) { }
 
@@ -24,17 +27,30 @@ export class DetailsFilmPage implements OnInit {
         this.film = response;
         this.filmGenres = response.genres.map(x => x.name);
         this.backdropUrl = 'https://image.tmdb.org/t/p/original' + this.film.backdrop_path;
-        console.log(this.film);
+        // console.log(this.film);
       });
       this.filmsService.getFilmCredits(this.filmId).subscribe((response: any) => {
         this.cast = response.cast;
-        console.log(this.cast);
+        response.crew.forEach(member => {
+          if(member.department === "Directing" && member.job === "Director") {
+            this.director = member;
+          }
+        });
+        // console.log(this.director);
+      });
+      this.filmsService.getSimilarFilms(this.filmId).subscribe((response: any) => {
+        this.similarFilms = response.results;
+        console.log(this.similarFilms);
       });
     });
   }
 
   public getActorImageUrl(id: number): string {
     return 'https://image.tmdb.org/t/p/original' + this.cast[id].profile_path;
+  }
+
+  public getSimilarFilmPoster(id: number): string {
+    return 'https://image.tmdb.org/t/p/original' + this.similarFilms[id].poster_path;
   }
 
 }

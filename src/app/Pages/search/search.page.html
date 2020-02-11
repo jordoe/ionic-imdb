@@ -1,9 +1,25 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>search</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content *ngIf="results !== undefined">
+  <div class="container">
+    <div class="bottom">
+      <div class="bottom-gradient"></div>
+      <div class="search-type-selector">
+        <div class="search-type-all">
+          <ion-text color="light"><h5 class="ion-no-margin details-tagline">All</h5></ion-text>
+        </div>
+        <div color="tertiary" class="search-type-search">
+          <ion-text color="dark"><h5 class="ion-no-margin details-tagline">Search</h5></ion-text>
+        </div>
+      </div>
+    </div>
+    <div class="top">
 
-<ion-content>
-
+    </div>
+    <div class="results">
+      <div class="films-container">
+        <div class="film" *ngFor="let film of results; index as i">
+          <img class="film__image" [src]="getFilmPoster(i)" [routerLink]="['/details-film', film.id]"/>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>

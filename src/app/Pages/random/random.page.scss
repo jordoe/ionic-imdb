@@ -242,6 +242,7 @@ ion-content {
 
 .filter-option-button {
     height: 50%;
+    --border-radius: 0.4rem;
 }
 
 .genres-container {
@@ -261,12 +262,14 @@ ion-content {
 
 .btn {
     margin: 2rem 0;
+    --border-radius: 0.6rem;
     &__filter {
         background-color: #6889d4;
     }
     &__details {
         margin: 0.5rem 0;
         width: 36%;
+        --border-radius: 0.4rem;
     }
 }
 

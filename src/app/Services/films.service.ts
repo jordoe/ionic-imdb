@@ -105,6 +105,33 @@ export class FilmsService {
     })
     return obs;
   }
+  
+  public getFilmsResults(page: number = null, yearGte: string|number = null, yearLte: string|number = null, genresArr: number[] = null, adultFilms: boolean = false): Observable<any> {
+    const pageStr = page === null ? '' : '&page=' + page;
+    const yearGteStr = yearGte === null ? '' : '&primary_release_date.gte=' + yearGte + '-01-01';
+    const yearLteStr = yearLte === null ? '' : '&primary_release_date.lte=' + yearLte + '-12-01';
+    const includeAdult = adultFilms;
+    let genres = '&with_genres=';
+    if (genresArr === null) {
+      genres = '';
+    } else {
+      genresArr.forEach((genre, i) => {
+        genres = genres + genre;
+        if (!(i == genresArr.length-1)) {
+          genres = genres + ',';
+        }
+      });
+    }
+    const url = 'https://api.themoviedb.org/3/discover/movie'+ this.key + pageStr + genres + yearGteStr + yearLteStr + '&include_adult=' + includeAdult;
+
+    const obs = new Observable(observer => {
+      this.https.get(url).subscribe((response: any) => {
+        observer.next(response);
+      });
+    });
+
+    return obs;
+  }
 
   public getGenresList(): Observable<any> {
     return this.https.get('https://api.themoviedb.org/3/genre/movie/list' + this.key);

@@ -122,8 +122,19 @@ export class FilmsService {
         }
       });
     }
-    const url = 'https://api.themoviedb.org/3/discover/movie'+ this.key + pageStr + genres + yearGteStr + yearLteStr + '&include_adult=' + includeAdult;
+    const url = 'https://api.themoviedb.org/3/discover/movie' + this.key + pageStr + genres + yearGteStr + yearLteStr + '&include_adult=' + includeAdult;
 
+    const obs = new Observable(observer => {
+      this.https.get(url).subscribe((response: any) => {
+        observer.next(response);
+      });
+    });
+
+    return obs;
+  }
+
+  public searchFilms(input: string): Observable<any> {
+    const url = 'https://api.themoviedb.org/3/search/movie' + this.key + '&query=' + input;
     const obs = new Observable(observer => {
       this.https.get(url).subscribe((response: any) => {
         observer.next(response);

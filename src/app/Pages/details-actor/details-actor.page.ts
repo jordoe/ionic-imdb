@@ -29,7 +29,7 @@ export class DetailsActorPage implements OnInit {
         //console.log(this.actorImages);
       });
       this.filmsService.getActorFilms(this.actorId).subscribe((response: any) => {
-        this.actorFilms = response.cast;
+        this.actorFilms = response.cast.filter(x => x.poster_path !== null);
         //console.log(this.actorFilms);
       });
     });

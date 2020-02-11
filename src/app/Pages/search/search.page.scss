@@ -1,3 +1,8 @@
+
+ion-content {
+    --overflow: hidden;
+}
+
 .container {
     position: relative;
     height: 100%;
@@ -23,6 +28,7 @@
 }
 
 .bottom-gradient {
+    pointer-events: none;
     position: absolute;
     height: 150%;
     width: 100%;
@@ -39,37 +45,34 @@
     padding: 2.8rem 2rem;
 }
 
-.search-type-all {
+.search-type {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
     width: 50%;
-    border-radius: 0.6rem 0 0 0.6rem;
-    background-color: #f5cd5e;
+    background-color: #4e4f54;
     h5 {
-        color: #17181a;
+        color: white;
+    }
+    &__sortby {
+        border-radius: 0.6rem 0 0 0.6rem;
+    }
+    &__search {
+        border-radius: 0 0.6rem 0.6rem 0;        
+    }
+    &--selected {
+        background-color: #f5cd5e;
+        h5 {
+            color: #17181a;
+        }        
     }
 }
 
-.search-type-search {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 50%;
-    border-radius: 0 0.6rem 0.6rem 0;
-    background-color: #4e4f54;
-}
-
-.top {
-    width: 100%;
-    height: 20%;
-}
-
 .results {
+    position: relative;
     width: 100%;
-    height: 80%;
+    height: 84%;
 }
 
 .films-container {
@@ -90,4 +93,30 @@
     margin: 0.5rem 0;
     &__image {
     }
+}
+
+.top {
+    width: 100%;
+    height: 16%;
+}
+
+.search-tab {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.sortby-tab {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.zeroResults {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 0;
 }

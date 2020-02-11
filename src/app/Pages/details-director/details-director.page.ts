@@ -30,7 +30,7 @@ export class DetailsDirectorPage implements OnInit {
       });
       this.filmsService.getActorFilms(this.directorId).subscribe((response: any) => {
         this.directorFilms = response.crew;
-        this.directorFilms = this.directorFilms.filter(x => x.department === "Directing" && x.job === "Director");
+        this.directorFilms = this.directorFilms.filter(x => x.department === "Directing" && x.job === "Director").filter(x => x.poster_path !== null);
         console.log(this.directorFilms);
       });
     });

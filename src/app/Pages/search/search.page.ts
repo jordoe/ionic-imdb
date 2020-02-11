@@ -34,6 +34,7 @@ export class SearchPage implements OnInit {
     if (e.detail === null || e.detail.target.value === '') {
       this.filmsService.getFilmsResults().subscribe((response: any) => {
         this.results = response.results;
+        this.noResults = false;
       });
     } else {
       const input = e.detail.target.value;

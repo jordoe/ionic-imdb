@@ -1,4 +1,4 @@
-<ion-content *ngIf="actor !== undefined && actorImages !== undefined">
+<ion-content *ngIf="actor !== undefined && actorImages !== undefined && actorFilms !== undefined">
   <div class="all-container">
     <div class="details-container">
       <div class="top-details-container">
@@ -34,6 +34,16 @@
       <div class="photos-container">
         <div class="image-container" *ngFor="let image of actorImages; index as i">
           <img class="actor-image" [src]="getActorImageUrl(i)"/>
+        </div>
+      </div>
+      <div>
+        <ion-text class="text-line" color="secondary">
+          <h4 class="ion-no-margin subtitle--big">Appears In: </h4>
+        </ion-text>
+      </div>
+      <div class="actor-films-container">
+        <div class="actor-film" *ngFor="let film of actorFilms; index as i">
+          <img class="actor-film__image" [src]="getFilmPoster(i)" *ngIf="hasFilmPoster(i)" [routerLink]="['/details-film', film.id]"/>
         </div>
       </div>
     </div>

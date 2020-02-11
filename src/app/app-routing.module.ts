@@ -8,7 +8,10 @@ const routes: Routes = [
   {path: 'details-film', loadChildren: () => import('./Pages/details-film/details-film.module').then( m => m.DetailsFilmPageModule)},
   {path: 'details-film/:id', loadChildren: () => import('./Pages/details-film/details-film.module').then( m => m.DetailsFilmPageModule)},
   {path: 'details-actor', loadChildren: () => import('./Pages/details-actor/details-actor.module').then( m => m.DetailsActorPageModule)},
-  {path: 'details-actor/:id', loadChildren: () => import('./Pages/details-actor/details-actor.module').then( m => m.DetailsActorPageModule)}
+  {path: 'details-actor/:id', loadChildren: () => import('./Pages/details-actor/details-actor.module').then( m => m.DetailsActorPageModule)},
+  {path: 'details-director', loadChildren: () => import('./Pages/details-director/details-director.module').then( m => m.DetailsDirectorPageModule)},
+  {path: 'details-director/:id', loadChildren: () => import('./Pages/details-director/details-director.module').then( m => m.DetailsDirectorPageModule)}
+
 
 ];
 

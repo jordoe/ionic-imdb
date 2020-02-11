@@ -1,6 +1,6 @@
 <ion-content *ngIf="film !== undefined && cast !== undefined">
   <div class="all-container">
-    <div class="backdrop-container">
+    <div class="backdrop-container" *ngIf="backdropUrl !== null">
       <ion-img [src]="(backdropUrl)"></ion-img>
     </div>
     <div class="details-container">
@@ -12,9 +12,9 @@
       </div>      
       <div class="details-header">
         <ion-text class="text-line" color="secondary">
-          <h4 class="ion-no-margin subtitle--big">{{ film.runtime }} min.</h4>
+          <h4 class="ion-no-margin subtitle--big" *ngIf="film.runtime !== ''">{{ film.runtime }} min.</h4>
         </ion-text>
-        <ion-text color="medium">        
+        <ion-text color="medium">
           <h5 class="ion-no-margin subtitle">{{ filmGenres.join(", ") }}</h5>
         </ion-text>
         <ion-text color="medium">        
@@ -28,7 +28,7 @@
         <ion-text class="text-line" color="secondary">
           <h4 class="subtitle--big">Director/s:</h4>
         </ion-text>
-        <ion-text class="text-line" color="dark">
+        <ion-text class="text-line" color="dark" [routerLink]="['/details-director', director.id]">
           <h4 class="subtitle subtitle-margin">{{ director.name }}</h4>
         </ion-text>
       </div>
@@ -37,8 +37,9 @@
       </ion-text>
       <div class="cast-container">
         <div class="cast">
-          <div class="actor" *ngFor="let actor of cast; index as i" [routerLink]="['/details-actor', actor.id]">
-            <img class="actor__image" [src]="getActorImageUrl(i)"/>
+          <div class="actor" *ngFor="let actor of cast; index as i">
+            <img class="actor__image" [src]="getActorImageUrl(i)" *ngIf="hasActorImage(i)" [routerLink]="['/details-actor', actor.id]"/>
+            <ion-icon name="person" class="actor__image--null" color="light" *ngIf="!hasActorImage(i)"></ion-icon>
             <ion-text class="text-line" color="dark">
               <h5 class="ion-no-margin subtitle">{{ actor.character }}</h5>
             </ion-text>

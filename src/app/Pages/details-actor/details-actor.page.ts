@@ -13,6 +13,7 @@ export class DetailsActorPage implements OnInit {
   public actor: any;
 
   public actorImages: any[];
+  public actorFilms: any[];
 
   constructor(private route: ActivatedRoute, private filmsService: FilmsService) { }
 
@@ -25,7 +26,11 @@ export class DetailsActorPage implements OnInit {
       });
       this.filmsService.getActorImages(this.actorId).subscribe((response: any) => {
         this.actorImages = response.profiles;
-        console.log(this.actorImages);
+        //console.log(this.actorImages);
+      });
+      this.filmsService.getActorFilms(this.actorId).subscribe((response: any) => {
+        this.actorFilms = response.cast;
+        console.log(this.actorFilms);
       });
     });
   }
@@ -43,5 +48,13 @@ export class DetailsActorPage implements OnInit {
     let curretnYear = dt.getFullYear();
     let actorBirthday = parseInt(this.actor.birthday.split('-')[0]);
     return curretnYear - actorBirthday;
+  }
+
+  public getFilmPoster(id: number): string {
+    return 'https://image.tmdb.org/t/p/original' + this.actorFilms[id].poster_path;
+  }
+
+  public hasFilmPoster(id: number): boolean {
+    return this.actorFilms[id].poster_path !== null;
   }
 }

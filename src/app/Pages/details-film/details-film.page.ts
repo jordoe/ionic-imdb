@@ -28,7 +28,11 @@ export class DetailsFilmPage implements OnInit {
       this.filmsService.getFilmDetails(this.filmId).subscribe((response: any) => {
         this.film = response;
         this.filmGenres = response.genres.map(x => x.name);
-        this.backdropUrl = 'https://image.tmdb.org/t/p/original' + this.film.backdrop_path;
+        if (this.film.backdrop_path !== null) {
+          this.backdropUrl = 'https://image.tmdb.org/t/p/original' + this.film.backdrop_path;
+        } else {
+          this.backdropUrl = null;
+        }
         //console.log(this.backdropUrl);
         // console.log(this.film);
       });
@@ -50,6 +54,10 @@ export class DetailsFilmPage implements OnInit {
 
   public getActorImageUrl(id: number): string {
     return 'https://image.tmdb.org/t/p/original' + this.cast[id].profile_path;
+  }
+
+  public hasActorImage(id: number): boolean {
+    return this.cast[id].profile_path !== null;
   }
 
   public getSimilarFilmPoster(id: number): string {

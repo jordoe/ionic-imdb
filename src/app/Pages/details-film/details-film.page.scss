@@ -109,6 +109,11 @@
         img {
             width: auto;
         }
+        &--null {
+            height: 70%;
+            width: 100%;
+            margin: 0.2rem;
+        }
     }
 }
 

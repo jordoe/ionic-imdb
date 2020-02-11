@@ -37,7 +37,7 @@
     filter: drop-shadow(6px 6px 8px rgba(0, 0, 0, 1));
 }
 
-.actor-name {
+.director-name {
     font-size: 20px;
 }
 
@@ -87,11 +87,11 @@
     margin: auto 1rem;
 }
 
-.actor-image {
+.director-image {
     height: 100%;
 }
 
-.actor-films-container {
+.director-films-container {
     width: 100%;
     padding: 1rem 0;
     display: flex;
@@ -99,7 +99,7 @@
     justify-content: space-around;
 }
 
-.actor-film {
+.director-film {
     height: 22rem;
     display: flex;
     flex-direction: column;

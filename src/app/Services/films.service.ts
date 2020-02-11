@@ -45,6 +45,11 @@ export class FilmsService {
     return this.https.get(film + this.key);
   }
 
+  public getActorFilms(id: string): Observable<any> {
+    const film = 'https://api.themoviedb.org/3/person/'+ id + '/movie_credits';
+    return this.https.get(film + this.key);
+  }
+
   public getRandomFilm(yearGte: string|number = null, yearLte: string|number = null, voteAvgGte: string|number = null, voteAvgLte: string|number = null, certifGte: string = null, certifLte: string = null, genresArr: number[] = null, orgLanguage: string = null): Observable<any> {
     const yearGteStr = yearGte === null ? '' : '&primary_release_date.gte=' + yearGte + '-01-01';
     const yearLteStr = yearLte === null ? '' : '&primary_release_date.lte=' + yearLte + '-12-01';

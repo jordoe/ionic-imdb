@@ -10,7 +10,11 @@ const routes: Routes = [
   {path: 'details-actor', loadChildren: () => import('./Pages/details-actor/details-actor.module').then( m => m.DetailsActorPageModule)},
   {path: 'details-actor/:id', loadChildren: () => import('./Pages/details-actor/details-actor.module').then( m => m.DetailsActorPageModule)},
   {path: 'details-director', loadChildren: () => import('./Pages/details-director/details-director.module').then( m => m.DetailsDirectorPageModule)},
-  {path: 'details-director/:id', loadChildren: () => import('./Pages/details-director/details-director.module').then( m => m.DetailsDirectorPageModule)}
+  {path: 'details-director/:id', loadChildren: () => import('./Pages/details-director/details-director.module').then( m => m.DetailsDirectorPageModule)},  {
+    path: 'search',
+    loadChildren: () => import('./Pages/search/search.module').then( m => m.SearchPageModule)
+  }
+
 
 
 ];

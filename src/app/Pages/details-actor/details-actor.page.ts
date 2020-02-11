@@ -30,7 +30,7 @@ export class DetailsActorPage implements OnInit {
       });
       this.filmsService.getActorFilms(this.actorId).subscribe((response: any) => {
         this.actorFilms = response.cast;
-        console.log(this.actorFilms);
+        //console.log(this.actorFilms);
       });
     });
   }

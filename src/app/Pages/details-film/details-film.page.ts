@@ -18,6 +18,8 @@ export class DetailsFilmPage implements OnInit {
 
   public similarFilms: any[];
 
+  public titleSticky: boolean = false;
+
   constructor(private route: ActivatedRoute, private filmsService: FilmsService) { }
 
   ngOnInit() {
@@ -27,6 +29,7 @@ export class DetailsFilmPage implements OnInit {
         this.film = response;
         this.filmGenres = response.genres.map(x => x.name);
         this.backdropUrl = 'https://image.tmdb.org/t/p/original' + this.film.backdrop_path;
+        //console.log(this.backdropUrl);
         // console.log(this.film);
       });
       this.filmsService.getFilmCredits(this.filmId).subscribe((response: any) => {
@@ -40,7 +43,7 @@ export class DetailsFilmPage implements OnInit {
       });
       this.filmsService.getSimilarFilms(this.filmId).subscribe((response: any) => {
         this.similarFilms = response.results;
-        console.log(this.similarFilms);
+        //console.log(this.similarFilms);
       });
     });
   }
@@ -52,5 +55,4 @@ export class DetailsFilmPage implements OnInit {
   public getSimilarFilmPoster(id: number): string {
     return 'https://image.tmdb.org/t/p/original' + this.similarFilms[id].poster_path;
   }
-
 }

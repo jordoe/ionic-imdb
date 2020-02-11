@@ -1,0 +1,41 @@
+<ion-content *ngIf="actor !== undefined && actorImages !== undefined">
+  <div class="all-container">
+    <div class="details-container">
+      <div class="top-details-container">
+        <div class="top-detail-image">
+          <img class="main-image" [src]="getActorMainImageUrl()"/>
+        </div>
+        <div class="top-detail-data">
+          <ion-text color="primary">
+            <h2 class="ion-no-margin actor-name">{{ actor.name }}</h2>
+          </ion-text>
+          <ion-text class="text-line" color="dark">
+            <h4 class="ion-no-margin subtitle--big" *ngIf="actor.deathday !== null">{{ actor.birthday.split('-')[0] }} - {{ actor.deathday.split('-')[0] }}</h4>
+            <h4 class="ion-no-margin subtitle--big" *ngIf="actor.deathday === null">{{ getActorAge() }} years</h4>
+          </ion-text>
+          <ion-text class="text-line" color="medium">
+            <h4 class="ion-no-margin subtitle">{{ actor.place_of_birth }}</h4>
+          </ion-text>
+          <div class="popularity-container">
+            <ion-text class="text-line" color="medium">
+              <h4 class="ion-no-margin subtitle">Popularity: {{ actor.popularity }}</h4>
+            </ion-text>
+          </div>
+        </div>
+      </div>
+      <div>
+        <ion-text class="text-line" color="secondary">
+          <h4 class="ion-no-margin subtitle--big">Biography: </h4>
+        </ion-text>
+      </div>
+      <div class="biography-container">
+        <div class="biography"><p class="biography__text">{{ actor.biography }}</p></div>
+      </div>
+      <div class="photos-container">
+        <div class="image-container" *ngFor="let image of actorImages; index as i">
+          <img class="actor-image" [src]="getActorImageUrl(i)"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

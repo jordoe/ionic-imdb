@@ -5,7 +5,7 @@
     </div>
     <div class="details-container">
       <div class="backdrop-gradient"></div>
-      <div class="title-container">
+      <div id="title" class="title-container" [class.title-container--sticky-shadow]="titleSticky">
         <ion-text color="primary">
           <h2 class="title">{{ film.original_title }}</h2>
         </ion-text>
@@ -37,7 +37,7 @@
       </ion-text>
       <div class="cast-container">
         <div class="cast">
-          <div class="actor" *ngFor="let actor of cast; index as i">
+          <div class="actor" *ngFor="let actor of cast; index as i" [routerLink]="['/details-actor', actor.id]">
             <img class="actor__image" [src]="getActorImageUrl(i)"/>
             <ion-text class="text-line" color="dark">
               <h5 class="ion-no-margin subtitle">{{ actor.character }}</h5>
@@ -53,7 +53,7 @@
       </ion-text>
       <div class="similar-films-container">
         <div class="similar-film" *ngFor="let film of similarFilms; index as i">
-          <img class="similar-film__image" [src]="getSimilarFilmPoster(i)"/>
+          <img class="similar-film__image" [src]="getSimilarFilmPoster(i)" [routerLink]="['/details-film', film.id]"/>
         </div>
       </div>
     </div>

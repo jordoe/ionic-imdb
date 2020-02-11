@@ -13,9 +13,9 @@ export class FilmsService {
   constructor(private https: HttpClient) { }
 
   public getDefaultFilm(): Observable<any> {
-    //const defaultFilm = 27205;
-    // const defaultFilm = 49049;
-    const defaultFilm = 1124;
+    const defaultFilm = 27205;
+    //const defaultFilm = 49049;
+    // const defaultFilm = 1124;
     const defaultFilmUrl = 'https://api.themoviedb.org/3/movie/'+ defaultFilm;
     return this.https.get(defaultFilmUrl + this.key);
   }
@@ -32,6 +32,16 @@ export class FilmsService {
 
   public getSimilarFilms(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/movie/'+ id + '/similar';
+    return this.https.get(film + this.key);
+  }
+
+  public getActorDetails(id: string): Observable<any> {
+    const film = 'https://api.themoviedb.org/3/person/'+ id;
+    return this.https.get(film + this.key);
+  }
+
+  public getActorImages(id: string): Observable<any> {
+    const film = 'https://api.themoviedb.org/3/person/'+ id + '/images';
     return this.https.get(film + this.key);
   }
 

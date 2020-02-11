@@ -6,7 +6,10 @@ const routes: Routes = [
   { path: 'home', loadChildren: () => import('./Pages/home/home.module').then( m => m.HomePageModule)},
   {path: 'random', loadChildren: () => import('./Pages/random/random.module').then( m => m.RandomPageModule)},
   {path: 'details-film', loadChildren: () => import('./Pages/details-film/details-film.module').then( m => m.DetailsFilmPageModule)},
-  {path: 'details-film/:id', loadChildren: () => import('./Pages/details-film/details-film.module').then( m => m.DetailsFilmPageModule)}
+  {path: 'details-film/:id', loadChildren: () => import('./Pages/details-film/details-film.module').then( m => m.DetailsFilmPageModule)},
+  {path: 'details-actor', loadChildren: () => import('./Pages/details-actor/details-actor.module').then( m => m.DetailsActorPageModule)},
+  {path: 'details-actor/:id', loadChildren: () => import('./Pages/details-actor/details-actor.module').then( m => m.DetailsActorPageModule)}
+
 ];
 
 @NgModule({

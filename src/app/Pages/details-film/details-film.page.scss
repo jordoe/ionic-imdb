@@ -125,12 +125,11 @@
 }
 
 .similar-film {
-    height: 20rem;
+    width: 46%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 1rem;
-    &__image{
-        height: 100%;
+    margin: 0.5rem 0;
+    &__image {
     }
 }

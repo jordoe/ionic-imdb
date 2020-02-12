@@ -162,6 +162,80 @@ ion-content {
     padding: 0.2rem 3.8rem;
 }
 
+.genres-container-parent {
+    position: absolute;
+    bottom: 0;
+    transform: translateY(100%);
+    z-index: 4;
+    height: 16rem;
+    width: 34rem;    
+}
+
+.genres-button-container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.genres-option-backdrop {
+    position: absolute;
+    z-index: 3;
+    left: -20rem;
+    width: 60rem;
+    height: 116rem;
+    background-color: rgba(8, 8, 8, 0.5);
+}
+
+.genres-ok {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 3rem;
+    width: 8rem;
+    transform: translateY(100%);
+}
+
+.genres-ok-button {
+    height: 100%;
+    width: 100%;
+}
+
+.genres-option-container {
+    height: 100%;
+    width: 100%;
+    border-radius: 1rem;
+    border: 0.1rem solid #424242;
+    background-color: #1f2023;
+    overflow-y: auto;
+    box-shadow: inset 0 -10px 6px -6px rgba(8, 8, 8, 0.5);
+}
+
+.genres-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0 1rem;
+}
+
+.genre {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 50%;
+    flex-grow: 1;
+    margin: 1rem 0;
+    h5 {
+        font-size: 1.6rem;
+        margin: 0;
+    }
+}
+
+.genre-checkbox {
+    margin-right: 1rem;
+}
+
 .icon {
     height: 100%;
     width: 100%;

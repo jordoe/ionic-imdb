@@ -9,6 +9,8 @@ import { FilmsService } from 'src/app/Services/films.service';
 })
 export class DetailsFilmPage implements OnInit {
 
+  public seenState: number = 0;
+
   private filmId: string;
   public film: any;
   public backdropUrl: string;
@@ -25,6 +27,9 @@ export class DetailsFilmPage implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.filmId = params.get('id');
+      this.filmsService.checkSeenState(this.filmId).subscribe((response: any) => {
+        this.seenState = response;
+      });
       this.filmsService.getFilmDetails(this.filmId).subscribe((response: any) => {
         this.film = response;
         this.filmGenres = response.genres.map(x => x.name);
@@ -33,8 +38,6 @@ export class DetailsFilmPage implements OnInit {
         } else {
           this.backdropUrl = null;
         }
-        //console.log(this.backdropUrl);
-        // console.log(this.film);
       });
       this.filmsService.getFilmCredits(this.filmId).subscribe((response: any) => {
         this.cast = response.cast;
@@ -43,16 +46,16 @@ export class DetailsFilmPage implements OnInit {
             this.director = member;
           }
         });
-        // console.log(this.director);
       });
       this.filmsService.getSimilarFilms(this.filmId).subscribe((response: any) => {
         this.similarFilms = response.results.filter(x => x.poster_path !== null);
-        //console.log(this.similarFilms);
       });
-      // this.filmsService.getFilmImages(this.filmId).subscribe((response: any) => {
-      //   console.log(response);
-      // });
     });
+  }
+
+  public setFilmState(state: number): void {
+    this.filmsService.setState(state, this.filmId);
+    this.seenState = state;
   }
 
   public getActorImageUrl(id: number): string {

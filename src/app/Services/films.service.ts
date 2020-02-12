@@ -7,6 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class FilmsService {
 
+  private savedFilms: string[] = [];
+  private seenFilms: string[] = [];
+
   private key: string = '?api_key=bf0c6f557b4f024d829885a7e35e552d'
   private langEs: string = '&language=es-ES'
 
@@ -152,5 +155,59 @@ export class FilmsService {
 
   public getGenresList(): Observable<any> {
     return this.https.get('https://api.themoviedb.org/3/genre/movie/list' + this.key);
+  }
+
+  public initSeenStatesStorage(): void {
+    if (window.localStorage["savedFilms"] == undefined) {
+      window.localStorage["savedFilms"] == "[]";
+    } else {
+      this.savedFilms = JSON.parse(window.localStorage["savedFilms"]);
+    }
+    if (window.localStorage["seenFilms"] == undefined) {
+      window.localStorage["seenFilms"] == "[]";
+    } else {
+      this.seenFilms = JSON.parse(window.localStorage["seenFilms"]);
+    }
+  }
+
+  private updateSeenStateStorage(): void {
+    window.localStorage["savedFilms"] = JSON.stringify(this.savedFilms);
+    window.localStorage["seenFilms"] = JSON.stringify(this.seenFilms);
+  }
+
+  public checkSeenState(filmId: string): Observable<any> {
+    const obs = new Observable(observer => {
+      let result;
+      if (this.savedFilms.includes(filmId)) {
+        result = 1;
+      } else if (this.seenFilms.includes(filmId)) {
+        result = 2;
+      } else {
+        result = 0;
+      }
+      observer.next(result);
+    });
+    return obs;
+  }
+
+  public setState(state: number, filmId: string): void {
+    switch (state) {
+      case 0:
+        this.savedFilms = this.savedFilms.filter(x => x !== filmId);
+        this.seenFilms = this.seenFilms.filter(x => x !== filmId);
+        break;
+      case 1:
+        this.seenFilms = this.seenFilms.filter(x => x !== filmId);
+        this.savedFilms.push(filmId);
+        break;
+      case 2:
+        this.savedFilms = this.savedFilms.filter(x => x !== filmId);
+        this.seenFilms.push(filmId);
+        break;
+    
+      default:
+        break;
+    }
+    this.updateSeenStateStorage();
   }
 }

@@ -10,7 +10,9 @@
           <h2 class="title">{{ film.original_title }}</h2>
         </ion-text>
         <div class="favorite-container">
-          <ion-icon class="favorite-icon" ios="ios-bookmark" color="medium"></ion-icon>
+          <ion-icon class="favorite-icon" name="bookmark" color="light" *ngIf="seenState === 0" (click)="setFilmState(1)"></ion-icon>
+          <ion-icon class="favorite-icon" name="bookmark" color="primary" *ngIf="seenState === 1" (click)="setFilmState(2)"></ion-icon>
+          <ion-icon class="favorite-icon" name="eye" color="primary" *ngIf="seenState === 2" (click)="setFilmState(0)"></ion-icon>
         </div>
       </div>      
       <div class="details-header">

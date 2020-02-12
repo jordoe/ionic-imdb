@@ -33,6 +33,7 @@ export class RandomPage implements OnInit {
   constructor(private filmsService: FilmsService, private pickerCtrl: PickerController) { }
 
   ngOnInit() {
+    this.filmsService.initSeenStatesStorage();
     this.filterDefaults = [['2000', '2020'], ['4', '10'], ['G', 'PG-13'], ['English']];
     this.forToFiltersNames = [['Release Year', 'years'], ['Vote Average', 'votes'],['Age Certification', 'califications']];
     this.filterDefaults.forEach((element, i) => {this.filters.push(this.filterDefaults[i])});

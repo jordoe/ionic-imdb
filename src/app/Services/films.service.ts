@@ -106,7 +106,7 @@ export class FilmsService {
     return obs;
   }
   
-  public getFilmsResults(page: number = null, yearGte: string|number = null, yearLte: string|number = null, genresArr: number[] = null, adultFilms: boolean = false): Observable<any> {
+  public getFilmsResults(page: number = null, yearGte: string|number = null, yearLte: string|number = null, genresArr: number[] = null, adultFilms: boolean = false, sortby: string = null): Observable<any> {
     const pageStr = page === null ? '' : '&page=' + page;
     const yearGteStr = yearGte === null ? '' : '&primary_release_date.gte=' + yearGte + '-01-01';
     const yearLteStr = yearLte === null ? '' : '&primary_release_date.lte=' + yearLte + '-12-01';
@@ -121,8 +121,10 @@ export class FilmsService {
           genres = genres + ',';
         }
       });
-    }
-    const url = 'https://api.themoviedb.org/3/discover/movie' + this.key + pageStr + genres + yearGteStr + yearLteStr + '&include_adult=' + includeAdult;
+    }    
+    const sortbyStr = sortby === null ? '' : '&sort_by=' + sortby;
+
+    const url = 'https://api.themoviedb.org/3/discover/movie' + this.key + pageStr + genres + yearGteStr + yearLteStr + '&include_adult=' + includeAdult + sortbyStr;
 
     const obs = new Observable(observer => {
       this.https.get(url).subscribe((response: any) => {

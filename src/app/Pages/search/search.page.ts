@@ -27,6 +27,8 @@ export class SearchPage implements OnInit {
   private datesFilter: string[] = ['2000', '2020'];
   private sortByFilter: string = 'Popularity Desc.';
 
+  public filtersActive: boolean[] = [false, false, false];
+
   constructor(private filmsService: FilmsService, private pickerCtrl: PickerController) { }
 
   ngOnInit() {
@@ -47,12 +49,22 @@ export class SearchPage implements OnInit {
     return 'https://image.tmdb.org/t/p/w154' + this.results[id].poster_path;
   }
 
-  public pressGenresButton(): void {
-    this.genresContainerOpened = !this.genresContainerOpened;
+  public applyFilter(): void {
+    this.currentPage = 1;
+    this.refreshResults();
   }
 
-  public pressGenre(index: number): void {
-    this.selectedGenres[index] = !this.selectedGenres[index];
+  private refreshResults(): void {
+    const activeGenres = this.filtersActive[0] ? this.parseGenres() : null;
+    const activeDateGte = this.filtersActive[1] ? this.datesFilter[0] : null;
+    const activeDateLte = this.filtersActive[1] ? this.datesFilter[0] : null;
+    const activeSortBy = this.filtersActive[2] ? this.parseSortBy() : null;
+    this.filmsService.getFilmsResults(this.currentPage, activeDateGte, activeDateLte, activeGenres, false, activeSortBy).subscribe((response: any) => {
+      if (response !== null) {
+        this.results = response.results.filter(x => x.poster_path !== null);
+        this.currentMaxPages = response.total_pages;
+      }
+    });
   }
 
   public inputChange(e: any) {
@@ -102,9 +114,51 @@ export class SearchPage implements OnInit {
       default:
         break;
     }
-    this.filmsService.getFilmsResults(this.currentPage).subscribe((response: any) => {
-      this.results = response.results.filter(x => x.poster_path !== null);
-    });
+    this.refreshResults();
+  }
+
+  public pressGenresButton(): void {
+    if (this.filtersActive[0] === false) {
+      this.setGenresOpened();
+    } else {
+      this.filtersActive[0] = false;
+      this.currentPage = 1;
+      this.refreshResults();
+    }
+  }
+
+  public pressGenresOkayButton(): void {
+    this.filtersActive[0] = true;
+    this.applyFilter();
+    this.genresContainerOpened = false;
+  }
+
+  public pressDatesButton(): void {
+    if (this.filtersActive[1] === false) {
+      this.showDatesPicker();
+    } else {
+      this.filtersActive[1] = false;
+      this.currentPage = 1;
+      this.refreshResults();
+    }
+  }
+
+  public pressSortByButton(): void {
+    if (this.filtersActive[2] === false) {
+      this.showSortByPicker();
+    } else {
+      this.filtersActive[2] = false;
+      this.currentPage = 1;
+      this.refreshResults();
+    }
+  }
+
+  public setGenresOpened(): void {
+    this.genresContainerOpened = !this.genresContainerOpened;
+  }
+
+  public pressGenre(index: number): void {
+    this.selectedGenres[index] = !this.selectedGenres[index];
   }
 
   async showDatesPicker() {
@@ -113,7 +167,15 @@ export class SearchPage implements OnInit {
     let opts: PickerOptions = {
       buttons: [
         {
-          text: 'Done'
+          text: 'Done',
+          role: 'done',
+          handler: value => {
+            this.datesFilter[0] = value.from.text;
+            this.datesFilter[1] = value.to.text;
+            this.filtersActive[1] = true;
+            this.applyFilter();
+            picker.dismiss(value, "confirm");
+          }
         }
       ],
       columns: [
@@ -131,12 +193,6 @@ export class SearchPage implements OnInit {
     picker.columns[0].selectedIndex = optionsGteArr.findIndex(x => x.text == this.datesFilter[0].toString());
     picker.columns[1].selectedIndex = optionsLteArr.findIndex(x => x.text == this.datesFilter[1].toString());
     picker.present();
-    picker.onDidDismiss().then(async data => {
-      let from = await picker.getColumn('from');
-      let to = await picker.getColumn('to');
-      this.datesFilter[0] = from.options[from.selectedIndex].text;
-      this.datesFilter[1] = to.options[to.selectedIndex].text;
-    })
   }
 
   private getYearsArr(direction: string): any[] {
@@ -170,7 +226,14 @@ export class SearchPage implements OnInit {
     let opts: PickerOptions = {
       buttons: [
         {
-          text: 'Done'
+          text: 'Done',
+          role: 'done',
+          handler: value => {
+            this.sortByFilter = value.sortby.text;
+            this.filtersActive[2] = true;
+            this.applyFilter();
+            picker.dismiss(value, "confirm");
+          }
         }
       ],
       columns: [
@@ -183,15 +246,50 @@ export class SearchPage implements OnInit {
     let picker = await this.pickerCtrl.create(opts);
     picker.columns[0].selectedIndex = optionsArr.findIndex(x => x.text == this.sortByFilter.toString());
     picker.present();
-    picker.onDidDismiss().then(async data => {
-      let value = await picker.getColumn('sortby');
-      this.sortByFilter = value.options[value.selectedIndex].text;
-    })
   }
 
   private getSortByArr(): any[] {
     let arr: any[] = ['Popularity Desc.', 'Popularity Asc.', 'Release Date Desc.', 'Release Date Asc.', 'Vote Average Desc.', 'Vote Average Asc.'];
     arr = arr.map(x => {return {text: x, value: x}});
     return arr;
+  }
+
+  private parseGenres(): number[] {
+    let activeGenres = [];
+    this.selectedGenres.forEach((selected, i) => {
+      if(selected) {
+        activeGenres.push(this.genres[i].id);
+      }
+    });
+    return activeGenres;
+  }
+
+  private parseSortBy(): string {
+    let activeSortBy;
+    switch (this.sortByFilter) {
+      case 'Popularity Desc.':
+        activeSortBy = 'popularity.desc';
+        break;
+      case 'Popularity Asc.':
+        activeSortBy = 'popularity.asc';
+        break;
+      case 'Release Date Desc.':
+        activeSortBy = 'release_date.desc';
+        break;
+      case 'Release Date Asc.':
+        activeSortBy = 'release_date.asc';
+        break;
+      case 'Vote Average Desc.':
+        activeSortBy = 'vote_average.desc';
+        break;
+      case 'Vote Average Asc.':
+        activeSortBy = 'vote_average.asc';
+        break;
+    
+      default:
+        activeSortBy = 'popularity.desc';
+        break;
+    }
+    return activeSortBy;
   }
 }

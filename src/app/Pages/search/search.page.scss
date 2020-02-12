@@ -54,6 +54,7 @@ ion-content {
     height: 100%;
     width: 50%;
     background-color: #4e4f54;
+    font-size: 1.5rem;
     h5 {
         color: white;
     }
@@ -111,6 +112,7 @@ ion-content {
 }
 
 .sortby-tab {
+    position: relative;
     width: 100%;
     height: 100%;
     display: flex;
@@ -118,27 +120,38 @@ ion-content {
     justify-content: space-around;
 }
 
-.sortby-top {
+.sortby-buttons {
     width: 100%;
     height: 50%;
     display: flex;
-    justify-content: flex-start;
-    -webkit-box-align: center;
+    justify-content: center;
     align-items: center;
 }
 
-.sortby-bottom {
-    height: 50%;
+.sortby-button-container {
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
+    height: 70%;    
+    flex-grow: 1;
 }
 
 .sortby-button {
-    height: 70%;
-    &--apply {
-        height: 60%;
+    height: 100%;
+    width: 100%;
+    &--active {
+        --ion-color-base: #f5cd5e !important;
+        --ion-color-contrast: #17181a !important;
+        --ion-color-shade: #f7dd97 !important;
     }
+}
+
+.sortby-button-close {
+    z-index: 1;
+    left: 0.2rem;
+    position: absolute;
+    height: 3rem;
+    width: 3rem;
 }
 
 .zeroResults {
@@ -165,17 +178,10 @@ ion-content {
 .genres-container-parent {
     position: absolute;
     bottom: 0;
-    transform: translateY(100%);
+    transform: translateY(86%);
     z-index: 4;
     height: 16rem;
-    width: 34rem;    
-}
-
-.genres-button-container {
-    position: relative;
-    height: 100%;
-    display: flex;
-    align-items: center;
+    width: 100%;
 }
 
 .genres-option-backdrop {

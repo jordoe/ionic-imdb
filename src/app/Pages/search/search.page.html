@@ -18,28 +18,32 @@
     </div>
     <div class="top">
       <div class="sortby-tab" *ngIf="searchType === 0">
-        <div class="sortby-top">
-          <div class="genres-button-container">
-            <ion-button color="danger" size="small" class="sortby-button" (click)="pressGenresButton()"> Genres </ion-button>
-            <div class="genres-option-backdrop" *ngIf="genresContainerOpened" (click)="pressGenresButton()"></div>
-            <div class="genres-container-parent" *ngIf="genresContainerOpened">
-              <div class="genres-ok">
-                <ion-button color="primary" size="small" class="genres-ok-button" (click)="showDatesPicker()"> Ok </ion-button>
-              </div>
-              <div class="genres-option-container">
-                <div class="genres-container">
-                  <div class="genre" *ngFor="let genre of genres; index as i" (click)="pressGenre(i)">
-                    <ion-checkbox class="genre-checkbox" [checked]="selectedGenres[i]"></ion-checkbox><h5> {{ genre.name }} </h5>
-                  </div>
-                </div>
-              </div>              
+        <div class="genres-option-backdrop" *ngIf="genresContainerOpened" (click)="setGenresOpened()"></div>
+          <div class="genres-container-parent" *ngIf="genresContainerOpened">
+            <div class="genres-ok">
+              <ion-button color="primary" size="small" class="genres-ok-button" (click)="pressGenresOkayButton()"> Done </ion-button>
             </div>
-          </div>
-          <ion-button color="danger" size="small" class="sortby-button" (click)="showDatesPicker()"> Dates </ion-button>
-          <ion-button color="danger" size="small" class="sortby-button" (click)="showSortByPicker()"> Sort By </ion-button>
+            <div class="genres-option-container">
+              <div class="genres-container">
+                <div class="genre" *ngFor="let genre of genres; index as i" (click)="pressGenre(i)">
+                <ion-checkbox class="genre-checkbox" [checked]="selectedGenres[i]"></ion-checkbox><h5> {{ genre.name }} </h5>
+              </div>
+            </div>
+          </div>              
         </div>
-        <div class="sortby-bottom">
-          <ion-button color="tertiary" class="sortby-button"> Apply Filters </ion-button>
+        <div class="sortby-buttons">
+          <div class="sortby-button-container">
+            <ion-icon class="sortby-button-close" name="close" color="danger" *ngIf="filtersActive[0]" (click)="pressGenresButton()"></ion-icon>
+            <ion-button color="danger" size="small" class="sortby-button" [class.sortby-button--active]="filtersActive[0]" (click)="pressGenresButton()"> Genres </ion-button>
+          </div>
+          <div class="sortby-button-container">
+            <ion-icon class="sortby-button-close" name="close" color="danger" *ngIf="filtersActive[1]" (click)="pressDatesButton()"></ion-icon>
+            <ion-button color="danger" size="small" class="sortby-button" [class.sortby-button--active]="filtersActive[1]" (click)="pressDatesButton()"> Dates </ion-button>
+          </div>
+          <div class="sortby-button-container">
+            <ion-icon class="sortby-button-close" name="close" color="danger" *ngIf="filtersActive[2]" (click)="pressSortByButton()"></ion-icon>
+            <ion-button color="danger" size="small" class="sortby-button" [class.sortby-button--active]="filtersActive[2]" (click)="pressSortByButton()"> Sort By </ion-button>
+          </div>
         </div>
       </div>
       <div class="search-tab" *ngIf="searchType === 1">

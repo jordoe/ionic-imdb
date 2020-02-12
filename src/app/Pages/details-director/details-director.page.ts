@@ -41,7 +41,7 @@ export class DetailsDirectorPage implements OnInit {
   }
 
   public getActorImageUrl(id: number): string {
-    return 'https://image.tmdb.org/t/p/original' + this.directorImages[id].file_path;
+    return 'https://image.tmdb.org/t/p/w185' + this.directorImages[id].file_path;
   }
 
   public getActorAge(): number {
@@ -52,7 +52,7 @@ export class DetailsDirectorPage implements OnInit {
   }
 
   public getFilmPoster(id: number): string {
-    return 'https://image.tmdb.org/t/p/original' + this.directorFilms[id].poster_path;
+    return 'https://image.tmdb.org/t/p/w342' + this.directorFilms[id].poster_path;
   }
 
   public hasFilmPoster(id: number): boolean {

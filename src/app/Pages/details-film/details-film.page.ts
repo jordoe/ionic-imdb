@@ -46,14 +46,14 @@ export class DetailsFilmPage implements OnInit {
         // console.log(this.director);
       });
       this.filmsService.getSimilarFilms(this.filmId).subscribe((response: any) => {
-        this.similarFilms = response.results;
-        //console.log(this.similarFilms);
+        this.similarFilms = response.results.filter(x => x.poster_path !== null);
+        console.log(this.similarFilms);
       });
     });
   }
 
   public getActorImageUrl(id: number): string {
-    return 'https://image.tmdb.org/t/p/original' + this.cast[id].profile_path;
+    return 'https://image.tmdb.org/t/p/w185' + this.cast[id].profile_path;
   }
 
   public hasActorImage(id: number): boolean {
@@ -61,6 +61,6 @@ export class DetailsFilmPage implements OnInit {
   }
 
   public getSimilarFilmPoster(id: number): string {
-    return 'https://image.tmdb.org/t/p/original' + this.similarFilms[id].poster_path;
+    return 'https://image.tmdb.org/t/p/w342' + this.similarFilms[id].poster_path;
   }
 }

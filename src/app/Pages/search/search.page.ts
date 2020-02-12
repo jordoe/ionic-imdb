@@ -26,7 +26,7 @@ export class SearchPage implements OnInit {
   }
 
   public getFilmPoster(id: number): string {
-    return 'https://image.tmdb.org/t/p/original' + this.results[id].poster_path;
+    return 'https://image.tmdb.org/t/p/w154' + this.results[id].poster_path;
   }
 
   public inputChange(e: any) {

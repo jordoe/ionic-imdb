@@ -49,10 +49,10 @@
           </div>
         </div>
       </div>
-      <ion-text class="text-line" color="secondary">
+      <ion-text class="text-line" color="secondary" *ngIf="similarFilms.length !== 0">
         <h4 class="ion-no-margin subtitle--big">Similar Films:</h4>
       </ion-text>
-      <div class="similar-films-container">
+      <div class="similar-films-container" *ngIf="similarFilms.length !== 0">
         <div class="similar-film" *ngFor="let film of similarFilms; index as i">
           <img class="similar-film__image" [src]="getSimilarFilmPoster(i)" [routerLink]="['/details-film', film.id]"/>
         </div>

@@ -12,6 +12,9 @@ export class SearchPage implements OnInit {
 
   public searchType = 1;
 
+  private sortPage: number = 1;
+  private searchPage: number = 1;
+
   public currentPage: number = 1;
   public results: any[];
 
@@ -25,7 +28,7 @@ export class SearchPage implements OnInit {
   public genresContainerOpened: boolean = false;
 
   private datesFilter: string[] = ['2000', '2020'];
-  private sortByFilter: string = 'Popularity Desc.';
+  private sortByFilter: string = 'Most Popular First';
 
   public filtersActive: boolean[] = [false, false, false];
 
@@ -51,20 +54,40 @@ export class SearchPage implements OnInit {
 
   public applyFilter(): void {
     this.currentPage = 1;
+    this.sortPage = 1;
     this.refreshResults();
   }
 
   private refreshResults(): void {
     const activeGenres = this.filtersActive[0] ? this.parseGenres() : null;
     const activeDateGte = this.filtersActive[1] ? this.datesFilter[0] : null;
-    const activeDateLte = this.filtersActive[1] ? this.datesFilter[0] : null;
+    const activeDateLte = this.filtersActive[1] ? this.datesFilter[1] : null;
     const activeSortBy = this.filtersActive[2] ? this.parseSortBy() : null;
     this.filmsService.getFilmsResults(this.currentPage, activeDateGte, activeDateLte, activeGenres, false, activeSortBy).subscribe((response: any) => {
-      if (response !== null) {
-        this.results = response.results.filter(x => x.poster_path !== null);
-        this.currentMaxPages = response.total_pages;
-      }
+      //console.log(response);
+      this.results = response.results.filter(x => x.poster_path !== null);
+      this.currentMaxPages = response.total_pages;
+      this.noResults = response.total_results === 0;
     });
+  }
+
+  private refresResultsGetAll(): void {
+    this.filmsService.getFilmsResults(this.currentPage).subscribe((response: any) => {
+      this.results = response.results;
+      this.currentMaxPages = response.total_pages;
+    })
+  }
+
+  public pressSearchType(id: number): void {
+    this.noResults = false;
+    if (id === 0 && this.searchType !== id) {
+      this.currentPage = this.sortPage;
+      this.refreshResults();
+    } else if (id === 1 && this.searchType !== id) {
+      this.currentPage = this.searchPage;
+      this.refresResultsGetAll();
+    }
+    this.searchType = id;
   }
 
   public inputChange(e: any) {
@@ -74,6 +97,7 @@ export class SearchPage implements OnInit {
         this.results = response.results.filter(x => x.poster_path !== null);
         this.currentMaxPages = response.total_pages;
         this.currentPage = 1;
+        this.searchPage = 1;
         this.noResults = false;
       });
     } else {
@@ -82,6 +106,7 @@ export class SearchPage implements OnInit {
         this.results = response.results.filter(x => x.poster_path !== null);
         this.currentMaxPages = response.total_pages;
         this.currentPage = 1;
+        this.searchPage = 1;
         if (response.total_results === 0) {
           this.noResults = true;
         } else {
@@ -96,25 +121,38 @@ export class SearchPage implements OnInit {
   }
 
   private canRight() {
-    return this.currentPage !== this.currentMaxPages;
+    return this.currentPage !== this.currentMaxPages && this.currentMaxPages !== 0;
   }
 
   public pressArrow(dir: string) {
+    let direction = 0;
+    const cntxt = this;
     switch (dir) {
       case 'l':
+        direction = -1;
         if (this.canLeft()) {
-          this.currentPage -= 1;
+          movePage();
         }
         break;
       case 'r':
+        direction = 1;
         if (this.canRight()) {
-          this.currentPage += 1;
+          movePage();
         }
         break;    
       default:
         break;
     }
-    this.refreshResults();
+    function movePage() {
+      cntxt.currentPage += direction;
+      if (cntxt.searchType === 0) {
+        cntxt.sortPage += direction;
+        cntxt.refreshResults();
+      } else if (cntxt.searchType === 1) {      
+        cntxt.searchPage += direction;      
+        cntxt.refresResultsGetAll();
+      }
+    }
   }
 
   public pressGenresButton(): void {
@@ -249,7 +287,7 @@ export class SearchPage implements OnInit {
   }
 
   private getSortByArr(): any[] {
-    let arr: any[] = ['Popularity Desc.', 'Popularity Asc.', 'Release Date Desc.', 'Release Date Asc.', 'Vote Average Desc.', 'Vote Average Asc.'];
+    let arr: any[] = ['Most Popular First', 'Less Popular First', 'Latest Released First', 'Oldest First', 'Best Score First', 'Worst Score First'];
     arr = arr.map(x => {return {text: x, value: x}});
     return arr;
   }
@@ -267,22 +305,22 @@ export class SearchPage implements OnInit {
   private parseSortBy(): string {
     let activeSortBy;
     switch (this.sortByFilter) {
-      case 'Popularity Desc.':
+      case 'Most Popular First':
         activeSortBy = 'popularity.desc';
         break;
-      case 'Popularity Asc.':
+      case 'Less Popular First':
         activeSortBy = 'popularity.asc';
         break;
-      case 'Release Date Desc.':
+      case 'Latest Released First':
         activeSortBy = 'release_date.desc';
         break;
-      case 'Release Date Asc.':
+      case 'Oldest First':
         activeSortBy = 'release_date.asc';
         break;
-      case 'Vote Average Desc.':
+      case 'Best Score First':
         activeSortBy = 'vote_average.desc';
         break;
-      case 'Vote Average Asc.':
+      case 'Worst Score First':
         activeSortBy = 'vote_average.asc';
         break;
     

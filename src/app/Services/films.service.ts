@@ -125,7 +125,6 @@ export class FilmsService {
     const sortbyStr = sortby === null ? '' : '&sort_by=' + sortby;
 
     const url = 'https://api.themoviedb.org/3/discover/movie' + this.key + pageStr + genres + yearGteStr + yearLteStr + '&include_adult=' + includeAdult + sortbyStr;
-
     const obs = new Observable(observer => {
       this.https.get(url).subscribe((response: any) => {
         observer.next(response);

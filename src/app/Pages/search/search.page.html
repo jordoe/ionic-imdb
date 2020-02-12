@@ -5,13 +5,13 @@
       <div class="pages-container">
         <div class="icon-container icon-container--left" (click)="pressArrow('l')" *ngIf="currentPage !== 1"><ion-icon class="icon" name="arrow-back" color="medium"></ion-icon></div>
         <ion-text color="dark"><h5 class="ion-no-margin">{{ currentPage }}</h5></ion-text>
-        <div class="icon-container icon-container--right" (click)="pressArrow('r')" *ngIf="this.currentPage !== this.currentMaxPages"><ion-icon class="icon" name="arrow-forward" color="medium"></ion-icon></div>
+        <div class="icon-container icon-container--right" (click)="pressArrow('r')" *ngIf="currentPage !== currentMaxPages && currentMaxPages !== 0"><ion-icon class="icon" name="arrow-forward" color="medium"></ion-icon></div>
       </div>
       <div class="search-type-selector">
-        <div class="search-type search-type__sortby" (click)="searchType = 0" [class.search-type--selected]="searchType === 0">
+        <div class="search-type search-type__sortby" (click)="pressSearchType(0)" [class.search-type--selected]="searchType === 0">
           <ion-text color="dark"><h5 class="ion-no-margin">Sort By</h5></ion-text>
         </div>
-        <div color="tertiary" class="search-type search-type__search" (click)="searchType = 1" [class.search-type--selected]="searchType === 1">
+        <div color="tertiary" class="search-type search-type__search" (click)="pressSearchType(1)" [class.search-type--selected]="searchType === 1">
           <ion-text color="light"><h5 class="ion-no-margin">Search</h5></ion-text>
         </div>
       </div>

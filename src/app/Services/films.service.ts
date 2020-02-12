@@ -35,6 +35,11 @@ export class FilmsService {
     return this.https.get(film + this.key);
   }
 
+  public getFilmImages(id: string): Observable<any> {
+    const film = 'https://api.themoviedb.org/3/movie/'+ id + '/images';
+    return this.https.get(film + this.key);
+  }
+
   public getActorDetails(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/person/'+ id;
     return this.https.get(film + this.key);

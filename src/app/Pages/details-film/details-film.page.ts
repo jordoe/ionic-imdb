@@ -47,8 +47,11 @@ export class DetailsFilmPage implements OnInit {
       });
       this.filmsService.getSimilarFilms(this.filmId).subscribe((response: any) => {
         this.similarFilms = response.results.filter(x => x.poster_path !== null);
-        console.log(this.similarFilms);
+        //console.log(this.similarFilms);
       });
+      // this.filmsService.getFilmImages(this.filmId).subscribe((response: any) => {
+      //   console.log(response);
+      // });
     });
   }
 

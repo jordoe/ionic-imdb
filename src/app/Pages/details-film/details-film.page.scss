@@ -40,6 +40,23 @@
     }
 }
 
+.favorite-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 2rem;
+    bottom: 0;
+    height: 100%;
+    width: 5rem;
+    padding: 0rem;
+}
+
+.favorite-icon {
+    height: 80%;
+    width: 80%;
+}
+
 .title {
     margin: 0;
 }

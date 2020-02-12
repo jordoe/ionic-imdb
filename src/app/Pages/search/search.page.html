@@ -2,6 +2,11 @@
   <div class="container">
     <div class="bottom">
       <div class="bottom-gradient"></div>
+      <div class="pages-container">
+        <div class="icon-container icon-container--left" (click)="pressArrow('l')" *ngIf="currentPage !== 1"><ion-icon class="icon" name="arrow-back" color="medium"></ion-icon></div>
+        <ion-text color="dark"><h5 class="ion-no-margin">{{ currentPage }}</h5></ion-text>
+        <div class="icon-container icon-container--right" (click)="pressArrow('r')" *ngIf="this.currentPage !== this.currentMaxPages"><ion-icon class="icon" name="arrow-forward" color="medium"></ion-icon></div>
+      </div>
       <div class="search-type-selector">
         <div class="search-type search-type__sortby" (click)="searchType = 0" [class.search-type--selected]="searchType === 0">
           <ion-text color="dark"><h5 class="ion-no-margin">Sort By</h5></ion-text>
@@ -13,7 +18,14 @@
     </div>
     <div class="top">
       <div class="sortby-tab" *ngIf="searchType === 0">
-        <div>Sort By Tab</div>
+        <div class="sortby-top">
+          <ion-button color="danger" size="small" class="sortby-button" (click)="showDoublePicker(forToFiltersNames[i][1])"> Genres </ion-button>
+          <ion-button color="danger" size="small" class="sortby-button" (click)="showDoublePicker(forToFiltersNames[i][1])"> Dates </ion-button>
+          <ion-button color="danger" size="small" class="sortby-button" (click)="showDoublePicker(forToFiltersNames[i][1])"> Sort By </ion-button>
+        </div>
+        <div class="sortby-bottom">
+          <ion-button color="tertiary" class="sortby-button" (click)="showDoublePicker(forToFiltersNames[i][1])"> Apply Filters </ion-button>
+        </div>
       </div>
       <div class="search-tab" *ngIf="searchType === 1">
         <ion-searchbar placeholder="Search Films" (ionInput)="inputChange($event)" (ionClear)="inputChange($event)"></ion-searchbar>

@@ -16,11 +16,15 @@ export class SearchPage implements OnInit {
 
   public noResults: boolean = false;
 
+  private currentInput: string = '';
+  private currentMaxPages: number = 1;
+
   constructor(private filmsService: FilmsService, private pickerCtrl: PickerController) { }
 
   ngOnInit() {
     this.filmsService.getFilmsResults().subscribe((response: any) => {
       this.results = response.results;
+      this.currentMaxPages = response.total_pages;
       //console.log(response);
     })
   }
@@ -33,13 +37,17 @@ export class SearchPage implements OnInit {
     //console.log(e.detail.target.value);
     if (e.detail === null || e.detail.target.value === '') {
       this.filmsService.getFilmsResults().subscribe((response: any) => {
-        this.results = response.results;
+        this.results = response.results.filter(x => x.poster_path !== null);
+        this.currentMaxPages = response.total_pages;
+        this.currentPage = 1;
         this.noResults = false;
       });
     } else {
-      const input = e.detail.target.value;
-      this.filmsService.searchFilms(input).subscribe((response: any) => {
+      this.currentInput = e.detail.target.value;
+      this.filmsService.searchFilms(this.currentInput).subscribe((response: any) => {
         this.results = response.results.filter(x => x.poster_path !== null);
+        this.currentMaxPages = response.total_pages;
+        this.currentPage = 1;
         if (response.total_results === 0) {
           this.noResults = true;
         } else {
@@ -47,5 +55,33 @@ export class SearchPage implements OnInit {
         }
       })
     }
+  }
+
+  private canLeft() {
+    return this.currentPage !== 1;
+  }
+
+  private canRight() {
+    return this.currentPage !== this.currentMaxPages;
+  }
+
+  public pressArrow(dir: string) {
+    switch (dir) {
+      case 'l':
+        if (this.canLeft()) {
+          this.currentPage -= 1;
+        }
+        break;
+      case 'r':
+        if (this.canRight()) {
+          this.currentPage += 1;
+        }
+        break;    
+      default:
+        break;
+    }
+    this.filmsService.getFilmsResults(this.currentPage).subscribe((response: any) => {
+      this.results = response.results.filter(x => x.poster_path !== null);
+    });
   }
 }

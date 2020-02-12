@@ -13,7 +13,7 @@ export class SearchPage implements OnInit {
   public searchType = 1;
 
   private sortPage: number = 1;
-  private searchPage: number = 1;
+  public searchPage: number = 1;
 
   public currentPage: number = 1;
   public results: any[];
@@ -21,7 +21,7 @@ export class SearchPage implements OnInit {
   public noResults: boolean = false;
 
   private currentInput: string = '';
-  private currentMaxPages: number = 1;
+  public currentMaxPages: number = 1;
 
   public genres;
   public selectedGenres = [];

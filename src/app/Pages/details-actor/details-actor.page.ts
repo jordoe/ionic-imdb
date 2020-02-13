@@ -22,7 +22,6 @@ export class DetailsActorPage implements OnInit {
       this.actorId = params.get('id');
       this.filmsService.getActorDetails(this.actorId).subscribe((response: any) => {
         this.actor = response;
-        //console.log(this.actor);
       });
       this.filmsService.getActorImages(this.actorId).subscribe((response: any) => {
         this.actorImages = response.profiles;

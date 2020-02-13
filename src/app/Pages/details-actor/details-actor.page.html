@@ -23,12 +23,12 @@
           </div>
         </div>
       </div>
-      <div>
+      <div *ngIf="actor.biography !== ''">
         <ion-text class="text-line" color="secondary">
           <h4 class="ion-no-margin subtitle--big"> {{ 'persondetails.biography' | translate }}: </h4>
         </ion-text>
       </div>
-      <div class="biography-container">
+      <div class="biography-container" *ngIf="actor.biography !== ''">
         <div class="biography"><p class="biography__text">{{ actor.biography }}</p></div>
       </div>
       <div class="photos-container">

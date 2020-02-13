@@ -30,7 +30,7 @@ import { NavComponent } from './Components/nav/nav.component';
       loader: {
         provide: TranslateLoader,
         useFactory: (http: HttpClient) => {
-          return new TranslateHttpLoader(http);
+          return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
         },
         deps: [ HttpClient ]
       }

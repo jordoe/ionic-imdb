@@ -230,7 +230,7 @@ export class FilmsService {
       default:
         break;
     }
-    console.log(this.seenFilms);
+    //console.log(this.seenFilms);
     this.updateSeenStateStorage();
   }
 

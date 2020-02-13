@@ -6,9 +6,11 @@
     <div class="details-container">
       <div class="backdrop-gradient"></div>
       <div id="title" class="title-container" [class.title-container--sticky-shadow]="titleSticky">
-        <ion-text color="primary">
-          <h2 class="title">{{ film.title }}</h2>
-        </ion-text>
+        <div class="title">
+          <ion-text color="primary">
+            <h2 class="title-text">{{ film.title }}</h2>
+          </ion-text>
+        </div>
         <div class="favorite-container">
           <ion-icon class="favorite-icon" name="bookmark" color="light" *ngIf="seenState === 0" (click)="setFilmState(1)"></ion-icon>
           <ion-icon class="favorite-icon" name="bookmark" color="primary" *ngIf="seenState === 1" (click)="setFilmState(2)"></ion-icon>
@@ -47,10 +49,10 @@
             <img class="actor__image" [src]="getActorImageUrl(i)" *ngIf="hasActorImage(i)" [routerLink]="['/details-actor', actor.id]"/>
             <ion-icon name="person" class="actor__image--null" color="light" *ngIf="!hasActorImage(i)"></ion-icon>
             <ion-text class="text-line" color="dark">
-              <h5 class="ion-no-margin subtitle">{{ actor.character }}</h5>
+              <h5 class="ion-no-margin subtitle">{{ truncStr(actor.character, 16) }}</h5>
             </ion-text>
             <ion-text color="medium">        
-              <h5 class="ion-no-margin subtitle">{{ actor.name }}</h5>
+              <h5 class="ion-no-margin subtitle">{{ truncStr(actor.name, 16) }}</h5>
             </ion-text>
           </div>
         </div>

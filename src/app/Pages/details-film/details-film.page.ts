@@ -71,4 +71,8 @@ export class DetailsFilmPage implements OnInit {
   public getSimilarFilmPoster(id: number): string {
     return 'https://image.tmdb.org/t/p/w342' + this.similarFilms[id].poster_path;
   }
+
+  public truncStr(str: string, at: number): string {
+    return (str.length > at) ? str.substr(0, at-1) + '...' : str;
+  }
 }

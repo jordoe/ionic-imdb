@@ -1,0 +1,66 @@
+{
+    "nav": {
+        "search": "Search",
+        "random": "Random",
+        "myfilms": "My Films"
+    },
+    "search": {
+        "filter": "Filter",
+        "search": "Search",
+        "searchfilms": "Search Films",
+        "genres": "Genres",
+        "dates": "Dates",
+        "sortby": "Sort By",
+        "nothing": "Nothing has been found...",
+        "done": "Done",
+        "sortbyfilters": {
+            "populardesc": "Most popular first",
+            "popularasc": "Less popular first",
+            "datedesc": "Most recent first",
+            "dateasc": "Oldest first",
+            "scoredesc": "Best score first",
+            "scoreasc": "Worst score first"
+        }
+    },
+    "random": {
+      "language": "Language",
+      "randomfilm": "Random Film",
+      "details": "+ Details",
+      "filters": "Filters",
+      "from": "From",
+      "to": "to",
+      "releaseyear": "Release year",
+      "voteaverage": "Vote average",
+      "agecertification": "Age certification",
+      "originallanguage": "Original language",
+      "languages": {
+          "english": "English",
+          "spanish": "Spanish",
+          "french": "French",
+          "japanese": "Japanese",
+          "turkish": "Turkish",
+          "hindi": "Hindi"
+      },
+      "genres": "Genres",
+      "selectall": "Select All",
+      "deselectall": "Deselect All"
+    },
+    "myfilms": {
+        "saved": "Saved",
+        "seen": "Seen",
+        "favorites": "Favorites",
+        "empty": "This list is empty..."
+    },
+    "filmdetails": {
+        "director": "Director/s",
+        "cast": "Cast",
+        "similar": "Similar Films:"
+    },
+    "actordetails": {
+        "years": "years",
+        "popularity": "Popularity",
+        "biography": "Biography",
+        "appearsin": "Appears in",
+        "films": "Films"
+    }
+}

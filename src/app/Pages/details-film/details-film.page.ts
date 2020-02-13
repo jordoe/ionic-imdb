@@ -33,6 +33,7 @@ export class DetailsFilmPage implements OnInit {
       });
       this.filmsService.getFilmDetails(this.filmId).subscribe((response: any) => {
         this.film = response;
+        console.log(response);
         this.filmGenres = response.genres.map(x => x.name);
         if (this.film.backdrop_path !== null) {
           this.backdropUrl = 'https://image.tmdb.org/t/p/original' + this.film.backdrop_path;

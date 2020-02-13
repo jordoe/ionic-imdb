@@ -11,8 +11,11 @@ export class FilmsService {
   private seenFilms: string[] = [];
   private favoriteFilms: string[] = [];
 
-  private key: string = '?api_key=bf0c6f557b4f024d829885a7e35e552d'
-  private langEs: string = '&language=es-ES'
+  private key: string = '?api_key=bf0c6f557b4f024d829885a7e35e552d';
+
+  private langEn: string = '&language=en-US';
+  private langEs: string = '&language=es-ES';
+  private currentLang: string = this.langEs;
 
   constructor(private https: HttpClient) { }
 
@@ -21,42 +24,42 @@ export class FilmsService {
     //const defaultFilm = 49049;
     // const defaultFilm = 1124;
     const defaultFilmUrl = 'https://api.themoviedb.org/3/movie/'+ defaultFilm;
-    return this.https.get(defaultFilmUrl + this.key);
+    return this.https.get(defaultFilmUrl + this.key + this.currentLang);
   }
 
   public getFilmDetails(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/movie/'+ id;
-    return this.https.get(film + this.key);
+    return this.https.get(film + this.key + this.currentLang);
   }
 
   public getFilmCredits(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/movie/'+ id + '/credits';
-    return this.https.get(film + this.key);
+    return this.https.get(film + this.key + this.currentLang);
   }
 
   public getSimilarFilms(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/movie/'+ id + '/similar';
-    return this.https.get(film + this.key);
+    return this.https.get(film + this.key + this.currentLang);
   }
 
   public getFilmImages(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/movie/'+ id + '/images';
-    return this.https.get(film + this.key);
+    return this.https.get(film + this.key + this.currentLang);
   }
 
   public getActorDetails(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/person/'+ id;
-    return this.https.get(film + this.key);
+    return this.https.get(film + this.key + this.currentLang);
   }
 
   public getActorImages(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/person/'+ id + '/images';
-    return this.https.get(film + this.key);
+    return this.https.get(film + this.key + this.currentLang);
   }
 
   public getActorFilms(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/person/'+ id + '/movie_credits';
-    return this.https.get(film + this.key);
+    return this.https.get(film + this.key + this.currentLang);
   }
 
   public getRandomFilm(yearGte: string|number = null, yearLte: string|number = null, voteAvgGte: string|number = null, voteAvgLte: string|number = null, certifGte: string = null, certifLte: string = null, genresArr: number[] = null, orgLanguage: string = null): Observable<any> {
@@ -105,7 +108,7 @@ export class FilmsService {
           } else {
             const randomFilm = (Math.floor(Math.random() * finalResponse.results.length) + 1) - 1;
             const filmId = finalResponse.results[randomFilm].id;
-            this.https.get('https://api.themoviedb.org/3/movie/'+ filmId + this.key).subscribe((film: any) => {
+            this.https.get('https://api.themoviedb.org/3/movie/'+ filmId + this.key + this.currentLang).subscribe((film: any) => {
               observer.next(film);
             })
           }
@@ -133,7 +136,7 @@ export class FilmsService {
     }    
     const sortbyStr = sortby === null ? '' : '&sort_by=' + sortby;
 
-    const url = 'https://api.themoviedb.org/3/discover/movie' + this.key + pageStr + genres + yearGteStr + yearLteStr + includeAdult + sortbyStr;
+    const url = 'https://api.themoviedb.org/3/discover/movie' + this.key + pageStr + genres + yearGteStr + yearLteStr + includeAdult + sortbyStr + this.currentLang;
     const obs = new Observable(observer => {
       this.https.get(url).subscribe((response: any) => {
         observer.next(response);
@@ -155,7 +158,7 @@ export class FilmsService {
   }
 
   public getGenresList(): Observable<any> {
-    return this.https.get('https://api.themoviedb.org/3/genre/movie/list' + this.key);
+    return this.https.get('https://api.themoviedb.org/3/genre/movie/list' + this.key + this.currentLang);
   }
 
   public initSeenStatesStorage(): void {

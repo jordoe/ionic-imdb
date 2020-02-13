@@ -20,12 +20,15 @@ export class MyfilmsPage implements OnInit {
     this.filmsService.initSeenStatesStorage();
     this.filmsService.getSavedFilmsLists(0).subscribe((response: any) => {
       this.filmsArrs[0] = response;
+      console.log(response);
     });
     this.filmsService.getSavedFilmsLists(1).subscribe((response: any) => {
       this.filmsArrs[1] = response;
+      console.log(response);
     });
     this.filmsService.getSavedFilmsLists(2).subscribe((response: any) => {
       this.filmsArrs[2] = response;
+      console.log(response);
     });
   }
 

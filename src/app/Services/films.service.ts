@@ -225,6 +225,7 @@ export class FilmsService {
       default:
         break;
     }
+    console.log(this.seenFilms);
     this.updateSeenStateStorage();
   }
 
@@ -244,18 +245,23 @@ export class FilmsService {
       default:
         break;
     }
+    console.log(listId + ": Entro")
     const obs = new Observable(observer => {
-      let resultArr = [];
-      let observablesArr = [];
-      for (const filmId of listArr) {
-        observablesArr.push(this.getFilmDetails(filmId));
-      }
-      forkJoin(observablesArr).subscribe((result: any) => {
-        for (const [i, observable] of result.entries()) {
-          resultArr.push(observable);
+      if (listArr.length > 0) {
+        let resultArr = [];
+        let observablesArr = [];
+        for (const filmId of listArr) {
+          observablesArr.push(this.getFilmDetails(filmId));
         }
-        observer.next(resultArr);
-      });
+        forkJoin(observablesArr).subscribe((result: any) => {
+          for (const [i, observable] of result.entries()) {
+            resultArr.push(observable);
+          }
+          observer.next(resultArr);
+        });
+      } else {
+        observer.next([]);
+      }
     });
     return obs;    
   }

@@ -6,28 +6,28 @@
           <ion-icon class="tab-icon" name="bookmark" color="medium" *ngIf="tabSelected!==0"></ion-icon>
           <ion-icon class="tab-icon" name="bookmark" color="primary" *ngIf="tabSelected===0"></ion-icon>
         </div>
-        <ion-label>Saved</ion-label>
+        <ion-label> {{ 'myfilms.saved' | translate }} </ion-label>
       </div>
       <div class="tab" (click)="presstab(1)" [class.tab--selected]="tabSelected===1">
         <div class="tab-icon-container">
           <ion-icon class="tab-icon" name="eye" color="medium" *ngIf="tabSelected!==1"></ion-icon>
           <ion-icon class="tab-icon" name="eye" color="primary" *ngIf="tabSelected===1"></ion-icon>
         </div>
-        <ion-label>Seen</ion-label>
+        <ion-label> {{ 'myfilms.seen' | translate }} </ion-label>
       </div>
       <div class="tab" (click)="presstab(2)" [class.tab--selected]="tabSelected===2">
         <div class="tab-icon-container">
           <ion-icon class="tab-icon" name="heart" color="medium" *ngIf="tabSelected!==2"></ion-icon>
           <ion-icon class="tab-icon" name="heart" color="primary" *ngIf="tabSelected===2"></ion-icon>
         </div>
-        <ion-label>Favorites</ion-label>
+        <ion-label> {{ 'myfilms.favorites' | translate }} </ion-label>
       </div>
     </div>
     <div *ngFor="let filmsArr of filmsArrs; index as index">
       <div class="content" *ngIf="index === tabSelected">
         <div class="cards-container">
           <div class="zeroResults" *ngIf="filmsArr.length===0">
-            <ion-text color="medium"><h5 class="ion-no-margin">This list is empty...</h5></ion-text>
+            <ion-text color="medium"><h5 class="ion-no-margin">{{ 'myfilms.empty' | translate }}</h5></ion-text>
           </div>
           <div class="film-card" *ngFor="let film of filmsArr; index as i" [routerLink]="['/details-film', film.id]">
             <div class="film-poster">

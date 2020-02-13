@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -11,55 +12,56 @@ export class FilmsService {
   private seenFilms: string[] = [];
   private favoriteFilms: string[] = [];
 
-  private key: string = '?api_key=bf0c6f557b4f024d829885a7e35e552d';
+  private key: string = '?api_key=bf0c6f557b4f024d829885a7e35e552d';  
 
-  private langEn: string = '&language=en-US';
-  private langEs: string = '&language=es-ES';
-  private currentLang: string = this.langEs;
+  public currentLang: string = this.initLanguageStorage();  
+  private currentLangArr: string = '&language=' + this.currentLang;
 
-  constructor(private https: HttpClient) { }
+  constructor(private https: HttpClient, private translate: TranslateService) {
+    this.translate.setDefaultLang(this.currentLang);
+   }
 
   public getDefaultFilm(): Observable<any> {
     const defaultFilm = 27205;
     //const defaultFilm = 49049;
     // const defaultFilm = 1124;
     const defaultFilmUrl = 'https://api.themoviedb.org/3/movie/'+ defaultFilm;
-    return this.https.get(defaultFilmUrl + this.key + this.currentLang);
+    return this.https.get(defaultFilmUrl + this.key + this.currentLangArr);
   }
 
   public getFilmDetails(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/movie/'+ id;
-    return this.https.get(film + this.key + this.currentLang);
+    return this.https.get(film + this.key + this.currentLangArr);
   }
 
   public getFilmCredits(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/movie/'+ id + '/credits';
-    return this.https.get(film + this.key + this.currentLang);
+    return this.https.get(film + this.key + this.currentLangArr);
   }
 
   public getSimilarFilms(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/movie/'+ id + '/similar';
-    return this.https.get(film + this.key + this.currentLang);
+    return this.https.get(film + this.key + this.currentLangArr);
   }
 
   public getFilmImages(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/movie/'+ id + '/images';
-    return this.https.get(film + this.key + this.currentLang);
+    return this.https.get(film + this.key + this.currentLangArr);
   }
 
   public getActorDetails(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/person/'+ id;
-    return this.https.get(film + this.key + this.currentLang);
+    return this.https.get(film + this.key + this.currentLangArr);
   }
 
   public getActorImages(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/person/'+ id + '/images';
-    return this.https.get(film + this.key + this.currentLang);
+    return this.https.get(film + this.key + this.currentLangArr);
   }
 
   public getActorFilms(id: string): Observable<any> {
     const film = 'https://api.themoviedb.org/3/person/'+ id + '/movie_credits';
-    return this.https.get(film + this.key + this.currentLang);
+    return this.https.get(film + this.key + this.currentLangArr);
   }
 
   public getRandomFilm(yearGte: string|number = null, yearLte: string|number = null, voteAvgGte: string|number = null, voteAvgLte: string|number = null, certifGte: string = null, certifLte: string = null, genresArr: number[] = null, orgLanguage: string = null): Observable<any> {
@@ -108,7 +110,7 @@ export class FilmsService {
           } else {
             const randomFilm = (Math.floor(Math.random() * finalResponse.results.length) + 1) - 1;
             const filmId = finalResponse.results[randomFilm].id;
-            this.https.get('https://api.themoviedb.org/3/movie/'+ filmId + this.key + this.currentLang).subscribe((film: any) => {
+            this.https.get('https://api.themoviedb.org/3/movie/'+ filmId + this.key + this.currentLangArr).subscribe((film: any) => {
               observer.next(film);
             })
           }
@@ -136,7 +138,7 @@ export class FilmsService {
     }    
     const sortbyStr = sortby === null ? '' : '&sort_by=' + sortby;
 
-    const url = 'https://api.themoviedb.org/3/discover/movie' + this.key + pageStr + genres + yearGteStr + yearLteStr + includeAdult + sortbyStr + this.currentLang;
+    const url = 'https://api.themoviedb.org/3/discover/movie' + this.key + pageStr + genres + yearGteStr + yearLteStr + includeAdult + sortbyStr + this.currentLangArr;
     const obs = new Observable(observer => {
       this.https.get(url).subscribe((response: any) => {
         observer.next(response);
@@ -158,7 +160,7 @@ export class FilmsService {
   }
 
   public getGenresList(): Observable<any> {
-    return this.https.get('https://api.themoviedb.org/3/genre/movie/list' + this.key + this.currentLang);
+    return this.https.get('https://api.themoviedb.org/3/genre/movie/list' + this.key + this.currentLangArr);
   }
 
   public initSeenStatesStorage(): void {
@@ -248,7 +250,6 @@ export class FilmsService {
       default:
         break;
     }
-    console.log(listId + ": Entro")
     const obs = new Observable(observer => {
       if (listArr.length > 0) {
         let resultArr = [];
@@ -267,5 +268,32 @@ export class FilmsService {
       }
     });
     return obs;    
+  }
+
+  public initLanguageStorage(): string {
+    if (window.localStorage["lang"] === undefined) {
+      window.localStorage["lang"] = "es-ES";
+    }
+    let result = window.localStorage["lang"];
+    return result;
+  }
+
+  public getLanguage(): number {
+    switch (this.currentLang) {
+      case 'en-US':
+        return 0;
+        break;
+      case 'es-ES':
+        return 1;
+        break;    
+      default:
+        break;
+    }
+  }
+
+  public setLanguage(lang: string): void {
+    window.localStorage["lang"] = lang;
+    this.currentLang = lang;
+    this.currentLangArr = '&language=' + this.currentLang;
   }
 }

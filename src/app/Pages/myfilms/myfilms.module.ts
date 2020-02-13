@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -13,7 +14,8 @@ import { MyfilmsPage } from './myfilms.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    MyfilmsPageRoutingModule
+    MyfilmsPageRoutingModule,
+    TranslateModule
   ],
   declarations: [MyfilmsPage]
 })

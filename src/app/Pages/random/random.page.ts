@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FilmsService } from 'src/app/Services/films.service';
 import { PickerController } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-random',
@@ -30,14 +31,20 @@ export class RandomPage implements OnInit {
 
   public errorModalOpened: boolean = false;
 
-  constructor(private filmsService: FilmsService, private pickerCtrl: PickerController) { }
+  public language: number;
+
+  constructor(private filmsService: FilmsService, private pickerCtrl: PickerController, private translate: TranslateService) { }
 
   ngOnInit() {
+    this.language = this.filmsService.getLanguage();
     this.filmsService.initSeenStatesStorage();
-    this.filterDefaults = [['2000', '2020'], ['4', '10'], ['G', 'PG-13'], ['English']];
-    this.forToFiltersNames = [['Release Year', 'years'], ['Vote Average', 'votes'],['Age Certification', 'califications']];
+    this.filterDefaults = [['2000', '2020'], ['4', '10'], ['G', 'PG-13'], ['english']];
+    this.forToFiltersNames = [['releaseyear', 'years'], ['voteaverage', 'votes'],['agecertification', 'califications']];
     this.filterDefaults.forEach((element, i) => {this.filters.push(this.filterDefaults[i])});
+    this.initFilm();
+  }
 
+  private initFilm() {
     this.filmsService.getDefaultFilm().subscribe((response: any) => {
       this.filmImage = 'https://image.tmdb.org/t/p/original'+response.poster_path;
       this.filmGenres = response.genres.map(x => x.name);
@@ -50,6 +57,23 @@ export class RandomPage implements OnInit {
         this.selectedGenres.push(false);
       });
     });
+  }
+
+  public pressLanguage(): void {
+    switch (this.language) {
+      case 0:
+        this.language = 1;
+        this.filmsService.setLanguage("es-ES");
+        break;
+      case 1:
+        this.language = 0;
+        this.filmsService.setLanguage("en-US");
+        break;    
+      default:
+        break;
+    }
+    //this.initFilm();
+    window.location.reload();
   }
 
   public pressRandom(): void {
@@ -146,16 +170,11 @@ export class RandomPage implements OnInit {
   }
 
   async showPicker(option: string) {
-    let optionsArr;
-    let selectedFilter;
-    switch (option) {
-      case 'language':
-        optionsArr = this.getLanguagesArr();
-        selectedFilter = 0;
-        break;
-      default:
-        break;
-    }
+    let optionsArr = this.getLanguagesArr();
+    optionsArr.forEach(elem => {
+      elem.text = this.translate.instant('random.languages.' + elem.text);
+    });
+    let selectedFilter = 0;
     let opts: PickerOptions = {
       buttons: [
         {
@@ -175,7 +194,7 @@ export class RandomPage implements OnInit {
     picker.present();
     picker.onDidDismiss().then(async data => {
       let value = await picker.getColumn('language');
-      arr.push(value.options[value.selectedIndex].text);
+      arr.push(value.options[value.selectedIndex].value);
       this.setPickerValues(option, arr);
     })
   }
@@ -302,8 +321,8 @@ export class RandomPage implements OnInit {
     return arr;
   }
 
-  private getLanguagesArr(): string[] {
-    let arr: any[] = ['English', 'Spanish', 'French', 'Japanese', 'Turkish', 'Hindi'];
+  private getLanguagesArr(): any[] {
+    let arr: any[] = ['english', 'spanish', 'french', 'japanese', 'turkish', 'hindi'];
     arr = arr.map(x => {return {text: x, value: x}});
     return arr;
   }
@@ -311,22 +330,22 @@ export class RandomPage implements OnInit {
   private parseLang(arr: string[]): string[] {
     let result = [];
     switch (arr[0]) {
-      case 'English':
+      case 'english':
         result.push('en');
         break;
-      case 'Spanish':
+      case 'spanish':
         result.push('es');
         break;
-      case 'French':
+      case 'french':
         result.push('fr');
         break;
-      case 'Japanese':
+      case 'japanese':
         result.push('ja');
         break;
-      case 'Turkish':
+      case 'turkish':
         result.push('tr');
         break;
-      case 'Hindi':
+      case 'hindi':
         result.push('hi');
         break;
       default:

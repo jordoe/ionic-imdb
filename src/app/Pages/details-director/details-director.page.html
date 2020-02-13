@@ -11,21 +11,21 @@
           </ion-text>
           <ion-text class="text-line" color="dark">
             <h4 class="ion-no-margin subtitle--big" *ngIf="director.deathday !== null">{{ director.birthday.split('-')[0] }} - {{ director.deathday.split('-')[0] }}</h4>
-            <h4 class="ion-no-margin subtitle--big" *ngIf="director.deathday === null">{{ getActorAge() }} years</h4>
+            <h4 class="ion-no-margin subtitle--big" *ngIf="director.deathday === null">{{ getActorAge() }} {{ 'persondetails.years' | translate }}</h4>
           </ion-text>
           <ion-text class="text-line" color="medium">
             <h4 class="ion-no-margin subtitle">{{ director.place_of_birth }}</h4>
           </ion-text>
           <div class="popularity-container">
             <ion-text class="text-line" color="medium">
-              <h4 class="ion-no-margin subtitle">Popularity: {{ director.popularity }}</h4>
+              <h4 class="ion-no-margin subtitle">{{ 'persondetails.popularity' | translate }}: {{ director.popularity }}</h4>
             </ion-text>
           </div>
         </div>
       </div>
       <div>
         <ion-text class="text-line" color="secondary">
-          <h4 class="ion-no-margin subtitle--big">Biography: </h4>
+          <h4 class="ion-no-margin subtitle--big">{{ 'persondetails.biography' | translate }}: </h4>
         </ion-text>
       </div>
       <div class="biography-container">
@@ -38,7 +38,7 @@
       </div>
       <div>
         <ion-text class="text-line" color="secondary">
-          <h4 class="ion-no-margin subtitle--big">Films: </h4>
+          <h4 class="ion-no-margin subtitle--big">{{ 'persondetails.films' | translate }}: </h4>
         </ion-text>
       </div>
       <div class="director-films-container">

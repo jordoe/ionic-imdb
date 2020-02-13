@@ -1,0 +1,66 @@
+{
+    "nav": {
+        "search": "Buscar",
+        "random": "Aleatorio",
+        "myfilms": "Mis Películas"
+    },
+    "search": {
+        "filter": "Filtrar",
+        "search": "Buscar",
+        "searchfilms": "Buscar Películas",
+        "genres": "Géneros",
+        "dates": "Fechas",
+        "sortby": "Ordenar Por",
+        "nothing": "No se ha encontrado nada...",
+        "done": "Hecho",
+        "sortbyfilters": {
+            "populardesc": "Más popular primero",
+            "popularasc": "Menos popular primero",
+            "datedesc": "Más recientes primero",
+            "dateasc": "Más antiguas primero",
+            "scoredesc": "Mejor puntuación primero",
+            "scoreasc": "Peor puntuación primero"
+        }
+    },
+    "random" : {
+      "language": "Idioma",
+      "randomfilm": "Película Aleatoria",
+      "details": "+ Detalles",
+      "filters": "Filtros",
+      "from": "Desde",
+      "to": "a",
+      "releaseyear": "Año de estreno",
+      "voteaverage": "Media de votos",
+      "agecertification": "Certificación de edad",
+      "originallanguage": "Idioma original",
+      "genres": "Géneros",
+      "languages": {
+          "english": "Inglés",
+          "spanish": "Español",
+          "french": "Francés",
+          "japanese": "Japonés",
+          "turkish": "Turco",
+          "hindi": "Indio"
+      },
+      "selectall": "Seleccionar Todo",
+      "deselectall": "Deseleccionar Todo"
+    },
+    "myfilms": {
+        "saved": "Guardadas",
+        "seen": "Vistas",
+        "favorites": "Favoritas",
+        "empty": "Esta lista está vacía..."
+    },
+    "filmdetails": {
+        "director": "Director/es",
+        "cast": "Reparto",
+        "similar": "Películas Similares"
+    },
+    "persondetails": {
+        "years": "años",
+        "popularity": "Popularidad",
+        "biography": "Biografía",
+        "appearsin": "Aparece en",
+        "films": "Películas"
+    }
+}

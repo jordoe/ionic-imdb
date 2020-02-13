@@ -1,5 +1,8 @@
 <ion-content>
   <div class="container">
+    <div class="language-container" (click)="pressLanguage()">
+      <ion-text color="medium"><p class="ion-no-margin language">{{ 'random.language' | translate }}</p></ion-text>
+    </div>
     <div class="top" *ngIf="film !== undefined">
       <ion-text color="primary">
         <h2 class="title">{{truncStr(film.title, 22)}} ({{film.release_date.split('-')[0]}})</h2>
@@ -13,7 +16,7 @@
         <ion-text color="medium"><p class="ion-no-margin small-detail">{{ film.runtime }} min.</p></ion-text>
       </div>
       <div class="details-button-container">
-        <ion-button class="btn__details" color="tertiary" size="small" [routerLink]="['/details-film', film.id]" routerDirection="forward">+ Details</ion-button>
+        <ion-button class="btn__details" color="tertiary" size="small" [routerLink]="['/details-film', film.id]" routerDirection="forward">{{ 'random.details' | translate }}</ion-button>
       </div>
     </div>
     <div class="bottom">
@@ -21,7 +24,7 @@
         <ion-grid class="ion-no-margin">
           <ion-row>
             <ion-col>
-              <ion-button class="btn" expand="block" (click)="pressRandom()">Random Film</ion-button>
+              <ion-button class="btn" expand="block" (click)="pressRandom()">{{ 'random.randomfilm' | translate }}</ion-button>
             </ion-col>
             <ion-col size="3">
               <ion-button class="btn" expand="block" color="tertiary" (click)="pressFiltersButton()"><ion-icon name="funnel"></ion-icon></ion-button>
@@ -36,7 +39,7 @@
       </div>
       <div class="filters-container">
         <div class="filters-header ion-no-padding">
-          <ion-text color="primary"><h1> Filters </h1></ion-text>
+          <ion-text color="primary"><h1> {{ 'random.filters' | translate }} </h1></ion-text>
         </div>
         <div class="filters-scroll-container">
           <div class="filters-scroll">
@@ -45,15 +48,15 @@
                 <div class="filter" *ngFor="let forToFilter of forToFiltersNames; index as i">
                   <ion-row>
                     <ion-col>            
-                      <div class="filter-name" (click)="pressFilter(i)"><ion-checkbox class="filter-checkbox" [checked]="filterActiveArr[i]"></ion-checkbox><h4> {{forToFiltersNames[i][0]}} </h4></div>
+                      <div class="filter-name" (click)="pressFilter(i)"><ion-checkbox class="filter-checkbox" [checked]="filterActiveArr[i]"></ion-checkbox><h4> {{ 'random.' + forToFiltersNames[i][0] | translate }}</h4></div>
                     </ion-col>
                   </ion-row>
                   <ion-row *ngIf="filterActiveArr[i]">
                     <ion-col>
                       <div class="filter-option-container">
                         <div class="filter-option-decorator"><div class="filter-option-decorator__pointer"></div></div>
-                        <ion-text class="filter-option-text">From</ion-text><ion-button color="tertiary" class="filter-option-button" (click)="showDoublePicker(forToFiltersNames[i][1])">{{ filters[i][0] }}</ion-button>
-                        <ion-text class="filter-option-text">To</ion-text><ion-button color="tertiary" class="filter-option-button" (click)="showDoublePicker(forToFiltersNames[i][1])">{{ filters[i][1] }}</ion-button>
+                        <ion-text class="filter-option-text">{{ 'random.from' | translate }}</ion-text><ion-button color="tertiary" class="filter-option-button" (click)="showDoublePicker(forToFiltersNames[i][1])">{{ filters[i][0] }}</ion-button>
+                        <ion-text class="filter-option-text">{{ 'random.to' | translate }}</ion-text><ion-button color="tertiary" class="filter-option-button" (click)="showDoublePicker(forToFiltersNames[i][1])">{{ filters[i][1] }}</ion-button>
                       </div>
                     </ion-col>
                   </ion-row>
@@ -61,14 +64,14 @@
                 <div class="filter">
                   <ion-row>
                     <ion-col>            
-                      <div class="filter-name" (click)="pressFilter(3)"><ion-checkbox class="filter-checkbox" [checked]="filterActiveArr[3]"></ion-checkbox><h4> Original Language </h4></div>
+                      <div class="filter-name" (click)="pressFilter(3)"><ion-checkbox class="filter-checkbox" [checked]="filterActiveArr[3]"></ion-checkbox><h4> {{ 'random.originallanguage' | translate }} </h4></div>
                     </ion-col>
                   </ion-row>
                   <ion-row *ngIf="filterActiveArr[3]">
                     <ion-col>
                       <div class="filter-option-container">
                         <div class="filter-option-decorator"><div class="filter-option-decorator__pointer"></div></div>
-                        <ion-button color="tertiary" class="filter-option-button" (click)="showPicker('language')">{{ filters[3][0] }}</ion-button>
+                        <ion-button color="tertiary" class="filter-option-button" (click)="showPicker('language')">{{ 'random.languages.' + filters[3][0] | translate }}</ion-button>
                       </div>
                     </ion-col>
                   </ion-row>
@@ -77,9 +80,9 @@
                   <ion-row>
                     <ion-col>
                       <div class="filter-header">
-                        <div class="filter-name"><h4> Genres </h4></div>
-                        <div class="filter-selectAll" *ngIf="!deselectAll" (click)="setAllGenres(true)"><h5>Select All</h5></div>
-                        <div class="filter-selectAll" *ngIf="deselectAll" (click)="setAllGenres(false)"><h5>Deselect All</h5></div>
+                        <div class="filter-name"><h4> {{ 'random.genres' | translate }} </h4></div>
+                        <div class="filter-selectAll" *ngIf="!deselectAll" (click)="setAllGenres(true)"><h5>{{ 'random.selectall' | translate }}</h5></div>
+                        <div class="filter-selectAll" *ngIf="deselectAll" (click)="setAllGenres(false)"><h5>{{ 'random.deselectall' | translate }}</h5></div>
                       </div>
                     </ion-col>
                   </ion-row>

@@ -36,6 +36,17 @@ ion-content {
     filter: drop-shadow(6px 6px 12px rgba(87, 87, 87, 0.4));
 }
 
+.language-container {
+    position: absolute;
+    right: 0;
+    padding-right: 1rem;
+    padding-top: 1rem;
+}
+
+.language {
+    font-size: 1.4rem;
+}
+
 .title {
     margin: 2rem 0;
     text-align: center;

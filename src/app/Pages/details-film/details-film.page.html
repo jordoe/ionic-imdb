@@ -32,14 +32,14 @@
       </div>
       <div class="directors-container">
         <ion-text class="text-line" color="secondary">
-          <h4 class="subtitle--big">Director/s:</h4>
+          <h4 class="subtitle--big">{{ 'filmdetails.director' | translate }}:</h4>
         </ion-text>
         <ion-text class="text-line" color="dark" [routerLink]="['/details-director', director.id]">
           <h4 class="subtitle subtitle-margin">{{ director.name }}</h4>
         </ion-text>
       </div>
       <ion-text class="text-line" color="secondary">
-        <h4 class="ion-no-margin subtitle--big">Cast:</h4>
+        <h4 class="ion-no-margin subtitle--big">{{ 'filmdetails.cast' | translate }}:</h4>
       </ion-text>
       <div class="cast-container">
         <div class="cast">
@@ -56,7 +56,7 @@
         </div>
       </div>
       <ion-text class="text-line" color="secondary" *ngIf="similarFilms.length !== 0">
-        <h4 class="ion-no-margin subtitle--big">Similar Films:</h4>
+        <h4 class="ion-no-margin subtitle--big">{{ 'filmdetails.similar' | translate }}:</h4>
       </ion-text>
       <div class="similar-films-container" *ngIf="similarFilms.length !== 0">
         <div class="similar-film" *ngFor="let film of similarFilms; index as i">

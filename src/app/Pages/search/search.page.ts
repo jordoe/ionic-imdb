@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FilmsService } from 'src/app/Services/films.service';
 import { PickerController } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search',
@@ -28,11 +29,11 @@ export class SearchPage implements OnInit {
   public genresContainerOpened: boolean = false;
 
   private datesFilter: string[] = ['2000', '2020'];
-  private sortByFilter: string = 'Most Popular First';
+  private sortByFilter: string = 'populardesc';
 
   public filtersActive: boolean[] = [false, false, false];
 
-  constructor(private filmsService: FilmsService, private pickerCtrl: PickerController) { }
+  constructor(private filmsService: FilmsService, private pickerCtrl: PickerController, private translate: TranslateService) { }
 
   ngOnInit() {
     this.filmsService.getFilmsResults().subscribe((response: any) => {
@@ -205,7 +206,7 @@ export class SearchPage implements OnInit {
     let opts: PickerOptions = {
       buttons: [
         {
-          text: 'Done',
+          text: this.translate.instant('search.done'),
           role: 'done',
           handler: value => {
             this.datesFilter[0] = value.from.text;
@@ -260,14 +261,18 @@ export class SearchPage implements OnInit {
   }
 
   async showSortByPicker() {
+    console.log(this.translate.instant('search.sortbyfilters.populardesc'));
     let optionsArr = this.getSortByArr();
+    optionsArr.forEach(option => {
+      option.text = this.translate.instant('search.sortbyfilters.' + option.text);
+    });
     let opts: PickerOptions = {
       buttons: [
         {
-          text: 'Done',
+          text: this.translate.instant('search.done'),
           role: 'done',
           handler: value => {
-            this.sortByFilter = value.sortby.text;
+            this.sortByFilter = value.sortby.value;
             this.filtersActive[2] = true;
             this.applyFilter();
             picker.dismiss(value, "confirm");
@@ -287,7 +292,7 @@ export class SearchPage implements OnInit {
   }
 
   private getSortByArr(): any[] {
-    let arr: any[] = ['Most Popular First', 'Less Popular First', 'Latest Released First', 'Oldest First', 'Best Score First', 'Worst Score First'];
+    let arr: any[] = ['populardesc', 'popularasc', 'datedesc', 'dateasc', 'scoredesc', 'scoreasc'];
     arr = arr.map(x => {return {text: x, value: x}});
     return arr;
   }
@@ -305,22 +310,22 @@ export class SearchPage implements OnInit {
   private parseSortBy(): string {
     let activeSortBy;
     switch (this.sortByFilter) {
-      case 'Most Popular First':
+      case 'populardesc':
         activeSortBy = 'popularity.desc';
         break;
-      case 'Less Popular First':
+      case 'popularasc':
         activeSortBy = 'popularity.asc';
         break;
-      case 'Latest Released First':
+      case 'datedesc':
         activeSortBy = 'release_date.desc';
         break;
-      case 'Oldest First':
+      case 'dateasc':
         activeSortBy = 'release_date.asc';
         break;
-      case 'Best Score First':
+      case 'scoredesc':
         activeSortBy = 'vote_average.desc';
         break;
-      case 'Worst Score First':
+      case 'scoreasc':
         activeSortBy = 'vote_average.asc';
         break;
     

@@ -1,4 +1,4 @@
-<ion-content *ngIf="savedFilms !== undefined && seenFilms !== undefined && favoriteFilms !== undefined">
+<ion-content *ngIf="filmsArrs[0] !== undefined && filmsArrs[1] !== undefined && filmsArrs[2] !== undefined">
   <div class="container">
     <div class="tabs">
       <div class="tab" (click)="presstab(0)" [class.tab--selected]="tabSelected===0">
@@ -23,16 +23,20 @@
         <ion-label>Favorites</ion-label>
       </div>
     </div>
-    <div class="content">
-      <div class="cards-container">
-        <div class="film-card">
-          <div class="film-poster">
-            <ion-img class="film-poster__img" [src]="getFilmPoster(seenFilms[1].poster_path)"></ion-img>
-          </div>
-          <div class="film-details">
-            <ion-text color="primary">
-              <h2 class="film-title ion-no-margin">{{ seenFilms[1].original_title }}</h2>
-            </ion-text>
+    <div *ngFor="let filmsArr of filmsArrs; index as index">
+      <div class="content" *ngIf="index === tabSelected">
+        <div class="cards-container">
+          <div class="film-card" *ngFor="let film of filmsArr; index as i" [routerLink]="['/details-film', film.id]">
+            <div class="film-poster">
+              <ion-img class="film-poster__img" [src]="getFilmPoster(film.poster_path)"></ion-img>
+            </div>
+            <div class="film-details">
+              <ion-text color="primary">
+                <h2 class="film-title ion-no-margin">{{ truncStr(film.original_title, 19) }}</h2>              
+              </ion-text>
+              <ion-text color="medium"><h5 class="ion-no-margin film-tagline">{{ film.runtime }} min.</h5></ion-text>
+              <div><p class="description">{{ truncStr(film.overview, 210) }}</p></div>
+            </div>
           </div>
         </div>
       </div>

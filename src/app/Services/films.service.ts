@@ -218,7 +218,7 @@ export class FilmsService {
         break;
       case 3:
         this.savedFilms = this.savedFilms.filter(x => x !== filmId);
-        this.seenFilms = this.favoriteFilms.filter(x => x !== filmId);
+        this.seenFilms = this.seenFilms.filter(x => x !== filmId);
         this.favoriteFilms.push(filmId);
           break;
     

@@ -10,9 +10,7 @@ export class MyfilmsPage implements OnInit {
 
   public tabSelected: number = 0;
 
-  public savedFilms: any[];
-  public seenFilms: any[];
-  public favoriteFilms: any[];
+  public filmsArrs: any[] = [0, 0, 0];
 
   constructor(private filmsService: FilmsService) { }
 
@@ -21,13 +19,13 @@ export class MyfilmsPage implements OnInit {
   ionViewWillEnter() {
     this.filmsService.initSeenStatesStorage();
     this.filmsService.getSavedFilmsLists(0).subscribe((response: any) => {
-      this.savedFilms = response;
+      this.filmsArrs[0] = response;
     });
     this.filmsService.getSavedFilmsLists(1).subscribe((response: any) => {
-      this.seenFilms = response;
+      this.filmsArrs[1] = response;
     });
     this.filmsService.getSavedFilmsLists(2).subscribe((response: any) => {
-      this.favoriteFilms = response;
+      this.filmsArrs[2] = response;
     });
   }
 
@@ -42,5 +40,9 @@ export class MyfilmsPage implements OnInit {
 
   public getFilmPoster(path: number): string {
     return 'https://image.tmdb.org/t/p/w154' + path;
+  }
+
+  public truncStr(str: string, at: number): string {
+    return (str.length > at) ? str.substr(0, at-1) + '...' : str;
   }
 }

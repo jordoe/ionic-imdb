@@ -39,7 +39,7 @@ export class SearchPage implements OnInit {
       this.results = response.results;
       this.currentMaxPages = response.total_pages;
       //console.log(response);
-    })
+    });
     this.filmsService.getGenresList().subscribe((response: any) => {
       this.genres = response.genres;
       this.genres.forEach(genre => {

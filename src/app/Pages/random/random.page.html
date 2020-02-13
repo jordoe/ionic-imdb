@@ -13,7 +13,7 @@
         <ion-text color="medium"><p class="ion-no-margin small-detail">{{ film.runtime }} min.</p></ion-text>
       </div>
       <div class="details-button-container">
-        <ion-button class="btn__details" color="secondary" size="small" [routerLink]="['/details-film', film.id]" routerDirection="forward">+ Details</ion-button>
+        <ion-button class="btn__details" color="tertiary" size="small" [routerLink]="['/details-film', film.id]" routerDirection="forward">+ Details</ion-button>
       </div>
     </div>
     <div class="bottom">
@@ -24,7 +24,7 @@
               <ion-button class="btn" expand="block" (click)="pressRandom()">Random Film</ion-button>
             </ion-col>
             <ion-col size="3">
-              <ion-button class="btn" expand="block" color="secondary" (click)="pressFiltersButton()"><ion-icon name="funnel"></ion-icon></ion-button>
+              <ion-button class="btn" expand="block" color="tertiary" (click)="pressFiltersButton()"><ion-icon name="funnel"></ion-icon></ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>

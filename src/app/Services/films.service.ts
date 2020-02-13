@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,7 @@ export class FilmsService {
 
   private savedFilms: string[] = [];
   private seenFilms: string[] = [];
+  private favoriteFilms: string[] = [];
 
   private key: string = '?api_key=bf0c6f557b4f024d829885a7e35e552d'
   private langEs: string = '&language=es-ES'
@@ -168,11 +169,17 @@ export class FilmsService {
     } else {
       this.seenFilms = JSON.parse(window.localStorage["seenFilms"]);
     }
+    if (window.localStorage["favoriteFilms"] == undefined) {
+      window.localStorage["favoriteFilms"] == "[]";
+    } else {
+      this.favoriteFilms = JSON.parse(window.localStorage["favoriteFilms"]);
+    }
   }
 
   private updateSeenStateStorage(): void {
     window.localStorage["savedFilms"] = JSON.stringify(this.savedFilms);
     window.localStorage["seenFilms"] = JSON.stringify(this.seenFilms);
+    window.localStorage["favoriteFilms"] = JSON.stringify(this.favoriteFilms);
   }
 
   public checkSeenState(filmId: string): Observable<any> {
@@ -182,6 +189,8 @@ export class FilmsService {
         result = 1;
       } else if (this.seenFilms.includes(filmId)) {
         result = 2;
+      } else if (this.favoriteFilms.includes(filmId)) {
+        result = 3;
       } else {
         result = 0;
       }
@@ -195,19 +204,59 @@ export class FilmsService {
       case 0:
         this.savedFilms = this.savedFilms.filter(x => x !== filmId);
         this.seenFilms = this.seenFilms.filter(x => x !== filmId);
+        this.favoriteFilms = this.favoriteFilms.filter(x => x !== filmId);
         break;
       case 1:
-        this.seenFilms = this.seenFilms.filter(x => x !== filmId);
         this.savedFilms.push(filmId);
+        this.seenFilms = this.seenFilms.filter(x => x !== filmId);
+        this.favoriteFilms = this.favoriteFilms.filter(x => x !== filmId);
         break;
       case 2:
         this.savedFilms = this.savedFilms.filter(x => x !== filmId);
         this.seenFilms.push(filmId);
+        this.favoriteFilms = this.favoriteFilms.filter(x => x !== filmId);
         break;
+      case 3:
+        this.savedFilms = this.savedFilms.filter(x => x !== filmId);
+        this.seenFilms = this.favoriteFilms.filter(x => x !== filmId);
+        this.favoriteFilms.push(filmId);
+          break;
     
       default:
         break;
     }
     this.updateSeenStateStorage();
+  }
+
+  public getSavedFilmsLists(listId: number): Observable<any> {
+    let listArr;
+    switch (listId) {
+      case 0:
+        listArr = this.savedFilms;
+        break;
+      case 1:
+        listArr = this.seenFilms;
+        break;
+      case 2:
+        listArr = this.favoriteFilms;
+        break;
+    
+      default:
+        break;
+    }
+    const obs = new Observable(observer => {
+      let resultArr = [];
+      let observablesArr = [];
+      for (const filmId of listArr) {
+        observablesArr.push(this.getFilmDetails(filmId));
+      }
+      forkJoin(observablesArr).subscribe((result: any) => {
+        for (const [i, observable] of result.entries()) {
+          resultArr.push(observable);
+        }
+        observer.next(resultArr);
+      });
+    });
+    return obs;    
   }
 }

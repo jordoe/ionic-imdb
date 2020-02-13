@@ -9,7 +9,7 @@ import { FilmsService } from 'src/app/Services/films.service';
 })
 export class DetailsFilmPage implements OnInit {
 
-  public seenState: number = 0;
+  public seenState: number;
 
   private filmId: string;
   public film: any;
@@ -27,6 +27,7 @@ export class DetailsFilmPage implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.filmId = params.get('id');
+      this.filmsService.initSeenStatesStorage();
       this.filmsService.checkSeenState(this.filmId).subscribe((response: any) => {
         this.seenState = response;
       });

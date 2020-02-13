@@ -1,4 +1,4 @@
-<ion-content *ngIf="film !== undefined && cast !== undefined">
+<ion-content *ngIf="film !== undefined && cast !== undefined && seenState !== undefined">
   <div class="all-container">
     <div class="backdrop-container" *ngIf="backdropUrl !== null">
       <ion-img [src]="(backdropUrl)"></ion-img>
@@ -12,7 +12,8 @@
         <div class="favorite-container">
           <ion-icon class="favorite-icon" name="bookmark" color="light" *ngIf="seenState === 0" (click)="setFilmState(1)"></ion-icon>
           <ion-icon class="favorite-icon" name="bookmark" color="primary" *ngIf="seenState === 1" (click)="setFilmState(2)"></ion-icon>
-          <ion-icon class="favorite-icon" name="eye" color="primary" *ngIf="seenState === 2" (click)="setFilmState(0)"></ion-icon>
+          <ion-icon class="favorite-icon" name="eye" color="primary" *ngIf="seenState === 2" (click)="setFilmState(3)"></ion-icon>
+          <ion-icon class="favorite-icon" name="heart" color="primary" *ngIf="seenState === 3" (click)="setFilmState(0)"></ion-icon>
         </div>
       </div>      
       <div class="details-header">

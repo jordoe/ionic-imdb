@@ -13,6 +13,10 @@ const routes: Routes = [
   {path: 'details-director/:id', loadChildren: () => import('./Pages/details-director/details-director.module').then( m => m.DetailsDirectorPageModule)},  {
     path: 'search',
     loadChildren: () => import('./Pages/search/search.module').then( m => m.SearchPageModule)
+  },
+  {
+    path: 'myfilms',
+    loadChildren: () => import('./Pages/myfilms/myfilms.module').then( m => m.MyfilmsPageModule)
   }
 
 

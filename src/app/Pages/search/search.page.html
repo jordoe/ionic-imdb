@@ -7,6 +7,8 @@
         <ion-text color="dark"><h5 class="ion-no-margin">{{ currentPage }}</h5></ion-text>
         <div class="icon-container icon-container--right" (click)="pressArrow('r')" *ngIf="currentPage !== currentMaxPages && currentMaxPages !== 0"><ion-icon class="icon" name="arrow-forward" color="medium"></ion-icon></div>
       </div>
+    </div>
+    <div class="top">
       <div class="search-type-selector">
         <div class="search-type search-type__sortby" (click)="pressSearchType(0)" [class.search-type--selected]="searchType === 0">
           <ion-text color="dark"><h5 class="ion-no-margin">{{ 'search.filter' | translate }}</h5></ion-text>
@@ -15,8 +17,6 @@
           <ion-text color="light"><h5 class="ion-no-margin">{{ 'search.search' | translate }}</h5></ion-text>
         </div>
       </div>
-    </div>
-    <div class="top">
       <div class="sortby-tab" *ngIf="searchType === 0">
         <div class="genres-option-backdrop" *ngIf="genresContainerOpened" (click)="setGenresOpened()"></div>
           <div class="genres-container-parent" *ngIf="genresContainerOpened">

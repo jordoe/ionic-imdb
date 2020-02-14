@@ -29,13 +29,16 @@ export class MyfilmsPage implements OnInit {
     });
   }
 
-  public presstab(tab: number): void {
+  public presstab(slide, tab: number): void {
     this.tabSelected = tab;
+    slide.slideTo(tab, 200);
     this.refreshFilmList();
   }
 
-  private refreshFilmList() {
-     
+  public slideChange(slide): void {
+    slide.getActiveIndex().then(index => {
+      this.tabSelected = index;
+    });
   }
 
   public getFilmPoster(path: number): string {

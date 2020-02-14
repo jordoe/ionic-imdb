@@ -23,7 +23,7 @@
         <ion-label> {{ 'myfilms.favorites' | translate }} </ion-label>
       </div>
     </div>
-    <ion-slides pager="false" [options]="options" class="slides" (ionSlideDidChange)="slideChange(slides)" #slides>
+    <ion-slides pager="false" class="slides" (ionSlideDidChange)="slideChange(slides)" #slides>
       <ion-slide *ngFor="let filmsArr of filmsArrs; index as index">
         <div class="content">
           <div class="cards-container">

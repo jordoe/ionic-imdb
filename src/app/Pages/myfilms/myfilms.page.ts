@@ -32,7 +32,6 @@ export class MyfilmsPage implements OnInit {
   public presstab(slide, tab: number): void {
     this.tabSelected = tab;
     slide.slideTo(tab, 200);
-    this.refreshFilmList();
   }
 
   public slideChange(slide): void {

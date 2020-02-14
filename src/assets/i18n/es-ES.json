@@ -5,6 +5,7 @@
         "myfilms": "Mis Películas"
     },
     "search": {
+        "page": "Pág.",
         "filter": "Filtrar",
         "search": "Buscar",
         "searchfilms": "Buscar Películas",

@@ -5,6 +5,7 @@
         "myfilms": "My Films"
     },
     "search": {
+        "page": "Page",
         "filter": "Filter",
         "search": "Search",
         "searchfilms": "Search Films",
